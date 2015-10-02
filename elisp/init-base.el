@@ -110,5 +110,19 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     (rename-buffer (concat "tmp" (number-to-string index)))))
 (global-set-key (kbd "<f5>") 'create-temporary-file)
 
+(defun fbn/frame-title-buffer-name (name)
+  "Modify buffer name for main frame title."
+  name)
+
+(defun fbn/set-frame-title-format (&optional prefix)
+  "Set format used for main frame title. If `prefix' is not given, `system-name' is used. For buffers associated with a file the full path is shown. Modifications can be made through `fbn/frame-title-buffer-name'."
+  (interactive "sPrefix: ")
+  (setq frame-title-format
+        (list (format "%s %%S: %%j" (if prefix prefix (system-name)))
+              '(:eval (if (buffer-file-name)
+                          (fbn/frame-title-buffer-name buffer-file-name)
+                        (buffer-name))))))
+(fbn/set-frame-title-format)
+
 
 (provide 'init-base)

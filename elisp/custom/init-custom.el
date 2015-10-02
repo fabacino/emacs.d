@@ -10,12 +10,7 @@
 (add-to-list 'grep-find-ignored-files "GPATH")
 
 
-;; Show full path of current buffer in main frame
-(defun fbn/set-frame-title-format (&optional prefix)
-  (interactive "sPrefix: ")
-  (setq frame-title-format
-        (list (format "%s %%S: %%j" (if prefix prefix (system-name)))
-              '(:eval (if (buffer-file-name)
-                          (replace-regexp-in-string (concat "c:/cygwin/home/" (getenv "USERNAME") "/") "~/" buffer-file-name)
-                        (buffer-name))))))
-(fbn/set-frame-title-format)
+;; Shorten path to home directory
+(defun fbn/frame-title-buffer-name (name)
+  "Modify buffer name for main frame title."
+  (replace-regexp-in-string (concat "/home/" (getenv "USER") "/") "~/" name))
