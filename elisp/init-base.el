@@ -67,20 +67,20 @@
     (global-set-key (kbd "C-s-l") 'windmove-right)))
 
 (defun goto-previous-occurrence ()
-  "Backward search word/char at point"
+  "Backward search word/char at point."
   (interactive)
   (execute-kbd-macro [?\C-r ?\C-w ?\C-r return]))
 (global-set-key (kbd "M-p") 'goto-previous-occurrence)
 
 (defun goto-next-occurrence ()
-  "Forward search word/char at point"
+  "Forward search word/char at point."
   (interactive)
   (execute-kbd-macro [?\C-s ?\C-w ?\C-s return ?\M-b]))
 (global-set-key (kbd "M-n") 'goto-next-occurrence)
 
 (defun push-mark-no-activate ()
-  "Pushes `point' to `mark-ring' and does not activate the region
-Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
+  "Pushes `point' to `mark-ring' and does not activate the region.
+Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled."
   (interactive)
   (push-mark (point) t nil)
   (message "Pushed mark to ring"))
@@ -94,13 +94,13 @@ This is the same as using \\[set-mark-command] with the prefix argument."
 (global-set-key (kbd "C-.") 'jump-to-mark)
 
 (defun kill-this-buffer ()
-  "Kill current buffer"
+  "Kill current buffer."
   (interactive) 
   (kill-buffer (current-buffer)))
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
 (defun create-temporary-file ()
-  "Create temporary file"
+  "Create temporary file."
   (interactive)
   (let* ((index 0)
          (tmp-file (make-temp-file "emacs_")))
@@ -115,7 +115,10 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   name)
 
 (defun fbn/set-frame-title-format (&optional prefix)
-  "Set format used for main frame title. If `prefix' is not given, `system-name' is used. For buffers associated with a file the full path is shown. Modifications can be made through `fbn/frame-title-buffer-name'."
+  "Set format used for main frame title.
+If PREFIX is not given, the variable `system-name' is used. For buffers
+associated with a file the full path is shown. Modifications can be made
+through the function `fbn/frame-title-buffer-name'."
   (interactive "sPrefix: ")
   (setq frame-title-format
         (list (format "%s %%S: %%j" (if prefix prefix (system-name)))
