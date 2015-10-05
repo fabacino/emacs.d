@@ -1,11 +1,5 @@
-/abbrev_defs
-/ac-comphist.dat
-/auto-save-list/
-/elisp/custom/*
-!/elisp/custom/init-custom.el
-/elpa/**/*.elc
-/elpa/*.signed
-/elpa/*.txt
-/elpa/archives/
-/elpa/gnupg/
-/projectile-bookmarks.eld
+abbrev_defs
+ac-comphist.dat
+auto-save-list/
+projectile-bookmarks.eld
+recentf

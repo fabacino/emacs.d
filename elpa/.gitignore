@@ -1,0 +1,5 @@
+*.elc
+*.signed
+*.txt
+archives/
+gnupg/
