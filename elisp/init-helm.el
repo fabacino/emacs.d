@@ -35,6 +35,10 @@
 ;; helm for projectile
 (require 'helm-projectile)
 
+;; helm for auto-complete
+(require 'ac-helm)
+(define-key ac-mode-map (kbd "M-TAB") 'ac-complete-with-helm) ; aka C-M-i
+
 ;; helm-gtags
 (require 'helm-gtags)
 (require 's)
