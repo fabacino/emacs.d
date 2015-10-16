@@ -20,6 +20,7 @@
 (require 'init-helm)
 (require 'init-locate)
 (require 'init-magit)
+(require 'init-org)
 (require 'init-projectile)
 (require 'init-undo-tree)
 (require 'init-w3m)
