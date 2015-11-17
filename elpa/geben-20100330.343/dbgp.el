@@ -672,6 +672,7 @@ It is saved for when this flag is not set.")
 	 (proc (buffer-local-value 'dbgp-buffer-process buffer)))
     (set-process-buffer proc buffer)
     (setq ad-return-value proc)))
+(ad-disable-advice 'open-network-stream 'around 'debugclient-pass-process-to-comint)
 
 (defun dbgp-comint-setup (proc string)
   "Setup a new comint buffer for a newly created session process PROC.
@@ -717,6 +718,7 @@ takes over the filter."
 	(set (make-local-variable 'dbgp-filter-input-list) nil)
 	(set (make-local-variable 'dbgp-filter-pending-text) nil))
       ;; setup comint buffer
+      (ad-enable-advice 'open-network-stream 'around 'debugclient-pass-process-to-comint)
       (ad-activate 'open-network-stream)
       (unwind-protect
 	  (make-comint-in-buffer "DBGp-Client" buf (cons t t))
