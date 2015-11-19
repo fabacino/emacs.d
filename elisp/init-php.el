@@ -10,8 +10,10 @@
   (php-eldoc-enable)
 ;  (ggtags-mode)
   (helm-gtags-mode)
-  (local-set-key (kbd "<f6>") 'geben)
-  (local-set-key (kbd "<f7>") 'geben-end)
+  ;; Toggle geben debugger with F6
+  (local-set-key (kbd "<f6>") '(lambda () (interactive)
+                                 (if dbgp-listeners (call-interactively 'geben-end)
+                                   (call-interactively 'geben))))
   (flycheck-mode))
 (add-hook 'php-mode-hook 'fbn/php-hook)
 
