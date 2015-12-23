@@ -127,5 +127,21 @@ through the function `fbn/frame-title-buffer-name'."
                         (buffer-name))))))
 (fbn/set-frame-title-format)
 
+;; Use japanese font for kanji
+(set-fontset-font "fontset-default" 'japanese-jisx0208
+                  (font-spec :family "Source Han Sans JP" :size 14))
+
+(defun fbn/toggle-variable-width-font ()
+  "Use variable-width font in current buffer.
+The font height of the variable-width font will be increased by 0.5
+steps. With a prefix argument, the same font height is used."
+  (interactive)
+  (if (not current-prefix-arg)
+      (if (bound-and-true-p buffer-face-mode)
+          (text-scale-decrease 0.5)
+        (text-scale-increase 0.5)))
+  (variable-pitch-mode))
+(global-set-key (kbd "C-<f8>") 'fbn/toggle-variable-width-font)
+
 
 (provide 'init-base)
