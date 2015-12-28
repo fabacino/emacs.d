@@ -12,14 +12,6 @@
   (global-set-key (kbd (concat prefix-command "SPC")) 'helm-all-mark-rings)
   (global-set-key (kbd (concat prefix-command "TAB")) 'helm-lisp-completion-at-point)
   (global-set-key (kbd (concat prefix-command "/")) 'helm-find))
-(global-set-key (kbd "<f2>") '(lambda () (interactive)
-                                (let ((current-prefix-arg '(4)))
-                                  (call-interactively 'helm-do-grep))))
-(global-set-key (kbd "C-<f2>") 'helm-do-grep)
-(global-set-key (kbd "S-<f2>") 'rgrep)
-(global-set-key (kbd "C-S-<f2>") 'lgrep)
-;(global-set-key (kbd "S-<f2>") '(lambda () (interactive) (helm :sources '(helm-source-findutils
-;                                                                          helm-source-recentf))))
 
 ;; Use C-h as backspace
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)

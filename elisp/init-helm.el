@@ -39,6 +39,39 @@
 (require 'ac-helm)
 (define-key ac-mode-map (kbd "M-TAB") 'ac-complete-with-helm) ; aka C-M-i
 
+;; helm-do-grep was considered useless and thus deleted. I still think
+;; it is pretty useful, since it is much faster to invoke than doing
+;; helm-find-files or friends and select the grep action.
+(defun fbn/helm-do-grep (&optional recurse)
+  "Preconfigured helm for grep.
+Contrarily to Emacs `grep', no default directory is given, but
+the full path of candidates in ONLY.
+That allow to grep different files not only in `default-directory' but anywhere
+by marking them (C-<SPACE>). If one or more directory is selected
+grep will search in all files of these directories.
+You can also use wildcard in the base name of candidate.
+If a prefix arg is given use the -r option of grep (recurse).
+The prefix arg can be passed before or after start file selection.
+See also `helm-do-grep-1'."
+  (interactive)
+  (require 'helm-mode)
+  (let* ((preselection (or (dired-get-filename nil t)
+                           (buffer-file-name (current-buffer))))
+         (only    (helm-read-file-name
+                   "Search in file(s): "
+                   :marked-candidates t
+                   :preselect (if helm-ff-transformer-show-only-basename
+                                  (helm-basename preselection)
+                                preselection)))
+         (prefarg (or current-prefix-arg helm-current-prefix-arg)))
+    (helm-do-grep-1 only prefarg)))
+(global-set-key (kbd "<f2>") '(lambda () (interactive)
+                                (let ((current-prefix-arg '(4)))
+                                  (call-interactively 'fbn/helm-do-grep))))
+(global-set-key (kbd "C-<f2>") 'fbn/helm-do-grep)
+(global-set-key (kbd "S-<f2>") 'rgrep)
+(global-set-key (kbd "C-S-<f2>") 'lgrep)
+
 ;; helm-gtags
 (require 'helm-gtags)
 (require 's)
