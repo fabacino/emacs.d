@@ -42,7 +42,7 @@
 ;; helm-do-grep was considered useless and thus deleted. I still think
 ;; it is pretty useful, since it is much faster to invoke than doing
 ;; helm-find-files or friends and select the grep action.
-(defun fbn/helm-do-grep (&optional recurse)
+(defun fbn/helm-do-grep ()
   "Preconfigured helm for grep.
 Contrarily to Emacs `grep', no default directory is given, but
 the full path of candidates in ONLY.
