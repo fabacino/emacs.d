@@ -29,6 +29,9 @@
 ;; Add abbrev from abbreviation: C-x a i g
 (setq-default abbrev-mode t)
 
+;; Use hydra for better organisation of keybindings
+(require 'hydra)
+
 ;; ediff configuration
 (require 'ediff)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
@@ -46,6 +49,9 @@
 ;; Use recentf
 (recentf-mode t)
 (setq recentf-max-saved-items 100)
+
+;; Use transpose-frame
+(require 'transpose-frame)
 
 ;; Use uniquifiy
 (require 'uniquify)
