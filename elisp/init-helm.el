@@ -66,6 +66,25 @@ See also `helm-do-grep-1'."
          (prefarg (or current-prefix-arg helm-current-prefix-arg)))
     (helm-do-grep-1 only prefarg)))
 
+;; helm-multi-occur was deleted as well...
+(defun fbn/helm-multi-occur ()
+  "Preconfigured helm for multi occur.
+With a prefix arg, reverse the behavior of
+`helm-moccur-always-search-in-current'.
+The prefix arg can be set before calling
+`helm-multi-occur-from-isearch' or during the buffer selection."
+  (interactive)
+  (let ((buf-list (helm-comp-read "Buffers: "
+                                   (helm-buffer-list)
+                                   :name "Occur in buffer(s)"
+                                   :marked-candidates t))
+        (helm-moccur-always-search-in-current
+         (if (or current-prefix-arg
+                  helm-current-prefix-arg)
+              (not helm-moccur-always-search-in-current)
+            helm-moccur-always-search-in-current)))
+    (helm-multi-occur-1 buf-list)))
+
 ;; helm-gtags
 (require 'helm-gtags)
 (require 's)
