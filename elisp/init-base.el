@@ -12,6 +12,7 @@
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
+(winner-mode)
 
 (setq confirm-kill-emacs 'y-or-n-p)
 (setq display-buffer-reuse-frames t)
