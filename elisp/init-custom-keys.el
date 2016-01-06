@@ -1,6 +1,6 @@
 ;; Custom key bindings
 (let ((prefix-command "C-c f "))
-  (global-set-key (kbd (concat prefix-command "a")) 'helm-apropos)
+;  (global-set-key (kbd (concat prefix-command "a")) 'helm-apropos)
   (global-set-key (kbd (concat prefix-command "b")) 'helm-resume)
 ;  (global-set-key (kbd (concat prefix-command "f")) 'helm-for-files)
   (global-set-key (kbd (concat prefix-command "i")) 'helm-semantic-or-imenu)
@@ -48,6 +48,65 @@ _/_: find       ^ ^
    ("G" rgrep nil)
    ("D" lgrep nil)
    ("o" helm-occur nil)
+   ("q" nil nil)))
+
+;; Help
+(global-set-key
+ (kbd "<f1>")
+ (defhydra hydra-help (:exit t)
+   "
+Help
+---------------------------------------------------------------------------------------------------------
+_a_: apropos           _i_: info                     _r_: emacs manual      _C-a_: about emacs           
+_b_: bindings          _I_: input method             _s_: syntax            _C-c_: copying               
+_c_: key briefly       _k_: key                      _S_: lookup symbol     _C-d_: emacs debugging       
+_C_: coding system     _K_: key command node         _t_: tutorial          _C-e_: external packages     
+_d_: apropos doc       _l_: lossage                  _v_: variable          _C-f_: emacs FAQ             
+_e_: echo messages     _L_: language environment     _w_: where is          _C-m_: order manuals         
+_f_: function          _m_: mode                     _._: local help        _C-o_: distribution          
+_F_: command node      _n_: emacs news               _?_: help              _C-p_: emacs problems        
+_g_: gnu project       _p_: find package             ^ ^                    _C-t_: emacs todo            
+_h_: hello file        _P_: package                  ^ ^                    _C-w_: no-warranty           
+"
+   ("a" helm-apropos nil)
+   ("b" describe-bindings nil)
+   ("c" describe-key-briefly nil)
+   ("C" describe-coding-system nil)
+   ("d" apropos-documentation nil)
+   ("e" view-echo-area-messages nil)
+   ("f" describe-function nil)
+   ("F" Info-goto-emacs-command-node nil)
+   ("g" describe-gnu-project nil)
+   ("h" view-hello-file nil)
+   ("i" info nil)
+   ("I" describe-input-method nil)
+   ("k" describe-key nil)
+   ("K" Info-goto-emacs-key-command-node nil)
+   ("l" view-lossage nil)
+   ("L" describe-language-environment nil)
+   ("m" describe-mode nil)
+   ("n" view-emacs-news nil)
+   ("p" finder-by-keyword nil)
+   ("P" describe-package nil)
+   ("r" info-emacs-manual nil)
+   ("s" describe-syntax nil)
+   ("S" info-lookup-symbol nil)
+   ("t" help-with-tutorial nil)
+   ("v" describe-variable nil)
+   ("w" where-is nil)
+   ("." display-local-help nil)
+   ("?" help-for-help nil)
+   ("C-a" about-emacs nil)
+   ("C-c" describe-copying nil)
+   ("C-d" view-emacs-debugging nil)
+   ("C-e" view-external-packages nil)
+   ("C-f" view-emacs-FAQ nil)
+   ("C-m" view-order-manuals nil)
+;   ("C-n" view-emacs-news nil)
+   ("C-o" describe-distribution nil)
+   ("C-p" view-emacs-problems nil)
+   ("C-t" view-emacs-todo nil)
+   ("C-w" describe-no-warranty nil)
    ("q" nil nil)))
 
 ;; Zoom
