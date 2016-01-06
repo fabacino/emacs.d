@@ -65,12 +65,6 @@ See also `helm-do-grep-1'."
                                 preselection)))
          (prefarg (or current-prefix-arg helm-current-prefix-arg)))
     (helm-do-grep-1 only prefarg)))
-(global-set-key (kbd "<f2>") '(lambda () (interactive)
-                                (let ((current-prefix-arg '(4)))
-                                  (call-interactively 'fbn/helm-do-grep))))
-(global-set-key (kbd "C-<f2>") 'fbn/helm-do-grep)
-(global-set-key (kbd "S-<f2>") 'rgrep)
-(global-set-key (kbd "C-S-<f2>") 'lgrep)
 
 ;; helm-gtags
 (require 'helm-gtags)
