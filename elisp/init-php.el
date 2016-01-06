@@ -4,17 +4,23 @@
 (defun fbn/php-hook ()
   (c-set-style "stroustrup")
   (c-set-offset 'case-label' 4)
-;  (local-set-key (kbd "RET") 'newline-and-indent)
   (local-unset-key (kbd "C-."))
   (local-set-key (kbd "C-c C-n") 'fbn/php-insert-namespace)
   (php-eldoc-enable)
 ;  (ggtags-mode)
   (helm-gtags-mode)
-  ;; Toggle geben debugger with F6
-  (local-set-key (kbd "<f6>") '(lambda () (interactive)
-                                 (if dbgp-listeners (call-interactively 'geben-end)
-                                   (call-interactively 'geben))))
-  (flycheck-mode))
+  (flycheck-mode)
+  (local-set-key
+   (kbd "<f6>")
+   (defhydra hydra-php-geben (:exit t)
+     "geben debugger"
+     ("y" (lambda () (interactive)
+            (if (not dbgp-listeners)
+                (call-interactively 'geben))) "start")
+     ("n" (lambda () (interactive)
+            (if dbgp-listeners
+                (call-interactively 'geben-end))) "stop")
+     ("q" nil nil))))
 (add-hook 'php-mode-hook 'fbn/php-hook)
 
 ;; Add function to insert namespace
