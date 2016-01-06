@@ -32,13 +32,15 @@
    "
 ^Find^          ^Search^
 ^^^^^^^^--------------------------
-_f_: files      _g_: rgrep
-_l_: locate     _d_: lgrep
-_r_: recent     _o_: occur
-_/_: find       ^ ^
+_f_: files         _g_: rgrep     
+_l_: locate        _d_: lgrep     
+_p_: projectile    _o_: occur     
+_r_: recent        _s_: swoop     
+_/_: find          ^ ^            
 "
    ("f" helm-for-files nil)
    ("l" helm-locate nil)
+   ("p" helm-projectile nil)
    ("r" helm-recentf nil)
    ("/" helm-find nil)
    ("g" (lambda () (interactive)
@@ -48,6 +50,9 @@ _/_: find       ^ ^
    ("G" rgrep nil)
    ("D" lgrep nil)
    ("o" helm-occur nil)
+   ("O" fbn/helm-multi-occur nil)
+   ("s" helm-swoop nil)
+   ("S" helm-multi-swoop nil)
    ("q" nil nil)))
 
 ;; Help
