@@ -37,7 +37,7 @@
 
 ;; helm for auto-complete
 (require 'ac-helm)
-(define-key ac-mode-map (kbd "M-TAB") 'ac-complete-with-helm) ; aka C-M-i
+(define-key ac-mode-map (kbd "M-i") 'ac-complete-with-helm)
 
 ;; helm-do-grep was considered useless and thus deleted. I still think
 ;; it is pretty useful, since it is much faster to invoke than doing
