@@ -117,11 +117,17 @@ _h_: hello file        _P_: package                  ^ ^                    _C-w
 ;; Zoom
 (global-set-key
  (kbd "<f9>")
- (defhydra hydra-zoom ()
-   "zoom"
-   ("g" text-scale-increase "in")
-   ("l" text-scale-decrease "out")
-   ("r" (text-scale-set 0) "reset" :exit t)
+ (defhydra hydra-font ()
+   "font"
+   ("u" (lambda () (interactive)
+          (text-scale-increase 0.5)) "size up")
+   ("d" (lambda () (interactive)
+          (text-scale-decrease 0.5)) "size down")
+   ("t" variable-pitch-mode "toggle width")
+   ("r" (lambda () (interactive)
+          (text-scale-set 0)
+          (if (bound-and-true-p buffer-face-mode)
+              (variable-pitch-mode))) "reset" :exit t)
    ("q" nil nil)))
 
 ;; Window
