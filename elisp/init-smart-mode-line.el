@@ -1,6 +1,5 @@
 (require 'smart-mode-line)
 (sml/setup)
-(rich-minority-mode 1)
 
 ;; Do not show global modes
 (add-to-list 'rm-blacklist " Helm")
