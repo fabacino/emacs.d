@@ -55,12 +55,12 @@ The prefix arg can be passed before or after start file selection.
 See also `helm-do-grep-1'."
   (interactive)
   (require 'helm-mode)
-  (let* ((preselection (or (dired-get-filename nil t)
-                           (buffer-file-name (current-buffer))))
+  (let* ((preselection (buffer-file-name (current-buffer)))
          (only    (helm-read-file-name
                    "Search in file(s): "
                    :marked-candidates t
-                   :preselect (if helm-ff-transformer-show-only-basename
+                   :preselect (if (and preselection
+                                       helm-ff-transformer-show-only-basename)
                                   (helm-basename preselection)
                                 preselection)))
          (prefarg (or current-prefix-arg helm-current-prefix-arg)))
