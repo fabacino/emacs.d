@@ -128,6 +128,7 @@ _h_: hello file        _P_: package                  ^ ^                    _C-w
           (text-scale-set 0)
           (if (bound-and-true-p buffer-face-mode)
               (variable-pitch-mode))) "reset" :exit t)
+   ("j" fbn/set-jp-font "jp font")
    ("q" nil nil)))
 
 ;; Window

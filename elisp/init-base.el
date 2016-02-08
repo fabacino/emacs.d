@@ -135,8 +135,14 @@ through the function `fbn/frame-title-buffer-name'."
 (fbn/set-frame-title-format)
 
 ;; Use japanese font for kanji
-(set-fontset-font "fontset-default" 'japanese-jisx0208
-                  (font-spec :family "Source Han Sans JP" :size 14))
+;; Unfortunately, setting the font does not work when emacs is used in daemon
+;; mode. We therefore use a function, so we can call it later in case the font
+;; has not been set correctly.
+(defun fbn/set-jp-font ()
+  (interactive)
+  (set-fontset-font "fontset-default" 'japanese-jisx0208
+                    (font-spec :family "Source Han Sans JP" :size 14)))
+(fbn/set-jp-font)
 
 
 (provide 'init-base)
