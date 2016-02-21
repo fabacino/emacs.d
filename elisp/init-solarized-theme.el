@@ -45,6 +45,8 @@
             (cyan-l    "#69CABF")
             (green-d   "#546E00")
             (green-l   "#B4C342"))
+        
+        ;;; dired+
         ;; General
         (set-face-attribute 'diredp-dir-heading nil :background nil :foreground yellow)
         (set-face-attribute 'diredp-dir-priv nil :background nil :foreground yellow)
@@ -74,8 +76,11 @@
 ;;   `diredp-get-file-or-dir-name',
 ;;   `diredp-ignored-file-name'
 ;;   `diredp-symlink',
-
-        )))
+        
+        ;;; ace-window
+        (set-face-foreground 'aw-leading-char-face red)
+        (set-face-background 'aw-background-face s-base03)
+        (set-face-foreground 'aw-background-face s-base01))))
 
 
 ;(setq solarized-distinct-fringe-background t)
