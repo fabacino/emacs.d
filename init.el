@@ -36,6 +36,7 @@
 (require 'init-ggtags)
 (require 'init-grep-a-lot)
 (require 'init-helm)
+(require 'init-ivy)
 (require 'init-locate)
 (require 'init-magit)
 (require 'init-org)
