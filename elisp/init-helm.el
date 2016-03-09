@@ -29,12 +29,6 @@
 (define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
 (define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
 
-;; helm-swoop: Switch from I-search to helm with M-i
-(require 'helm-swoop)
-
-;; helm for projectile
-(require 'helm-projectile)
-
 ;; helm for auto-complete
 (require 'ac-helm)
 (define-key ac-mode-map (kbd "M-i") 'ac-complete-with-helm)

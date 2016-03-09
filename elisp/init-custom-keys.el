@@ -3,7 +3,7 @@
 ;  (global-set-key (kbd (concat prefix-command "a")) 'helm-apropos)
   (global-set-key (kbd (concat prefix-command "b")) 'helm-resume)
 ;  (global-set-key (kbd (concat prefix-command "f")) 'helm-for-files)
-  (global-set-key (kbd (concat prefix-command "i")) 'helm-semantic-or-imenu)
+  (global-set-key (kbd (concat prefix-command "i")) 'counsel-imenu)
 ;  (global-set-key (kbd (concat prefix-command "l")) 'helm-locate)
 ;  (global-set-key (kbd (concat prefix-command "o")) 'helm-occur)
   (global-set-key (kbd (concat prefix-command "m")) 'helm-man-woman)
@@ -35,12 +35,12 @@
 _f_: files         _g_: rgrep     
 _l_: locate        _d_: lgrep     
 _p_: projectile    _o_: occur     
-_r_: recent        _s_: swoop     
+_r_: recent        ^ ^            
 _/_: find          ^ ^            
 "
    ("f" helm-for-files nil)
-   ("l" helm-locate nil)
-   ("p" helm-projectile nil)
+   ("l" counsel-locate nil)
+   ("p" counsel-git nil)
    ("r" helm-recentf nil)
    ("/" helm-find nil)
    ("g" (lambda () (interactive)
@@ -51,8 +51,6 @@ _/_: find          ^ ^
    ("D" lgrep nil)
    ("o" helm-occur nil)
    ("O" fbn/helm-multi-occur nil)
-   ("s" helm-swoop nil)
-   ("S" helm-multi-swoop nil)
    ("q" nil nil)))
 
 ;; Help
