@@ -22,7 +22,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
 
-(add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "elisp/" user-emacs-directory))
 
 ;; General settings
 (require 'init-base)
@@ -35,6 +35,7 @@
 (require 'init-flycheck)
 (require 'init-ggtags)
 (require 'init-grep-a-lot)
+(require 'init-hackernews)
 (require 'init-helm)
 (require 'init-ivy)
 (require 'init-locate)

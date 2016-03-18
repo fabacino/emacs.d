@@ -1,0 +1,3 @@
+[submodule "git/hackernews"]
+	path = git/hackernews
+	url = https://github.com/fabacino/hackernews.el.git
