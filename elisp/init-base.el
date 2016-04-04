@@ -134,6 +134,13 @@ through the function `fbn/frame-title-buffer-name'."
                         (buffer-name))))))
 (fbn/set-frame-title-format)
 
+;; Use mozc for japanese input
+(set-language-environment "Japanese")
+(if (featurep 'mozc)
+    (progn
+      (require 'mozc)
+      (setq default-input-method "japanese-mozc")))
+
 ;; Use japanese font for kanji
 ;; Unfortunately, setting the font does not work when emacs is used in daemon
 ;; mode. We therefore use a function, so we can call it later in case the font
