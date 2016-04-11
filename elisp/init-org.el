@@ -12,6 +12,8 @@
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "gtd.org" "Tasks")
          "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+        ("c" "Calendar" entry (file+headline "gtd.org" "Calendar")
+         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
         ("j" "Journal" entry (file nil)
          "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
         ("b" "Bookmark" entry (file+headline "bookmarks.org" "NEW")
