@@ -2,6 +2,7 @@
 
 ;; Common settings for org-mode
 (global-set-key (kbd "<f12>") 'org-agenda)
+(setq org-directory "~/org")
 (setq org-agenda-files (list "~/org"))
 (setq org-log-done t)
 (setq org-clock-out-remove-zero-time-clocks t)
@@ -11,13 +12,13 @@
 (setq org-default-notes-file (concat org-directory "/journal.org"))
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "gtd.org" "Tasks")
-         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+         "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
         ("c" "Calendar" entry (file+headline "gtd.org" "Calendar")
-         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+         "* %?\nSCHEDULED: %^T\n")
         ("j" "Journal" entry (file nil)
-         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")
+         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
         ("b" "Bookmark" entry (file+headline "bookmarks.org" "NEW")
-         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n\n")))
+         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")))
 
 ;; Allow code blocks in these languages to be executed within org files
 (require 'ob-emacs-lisp)
