@@ -31,6 +31,7 @@
 (require 'init-ace)
 (require 'init-auto-complete)
 (require 'init-avy)
+(require 'init-comics)
 (require 'init-dired)
 (require 'init-flycheck)
 (require 'init-ggtags)
