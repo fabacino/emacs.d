@@ -40,7 +40,7 @@ _/_: find          ^ ^
 "
    ("f" helm-for-files nil)
    ("l" counsel-locate nil)
-   ("p" counsel-git nil)
+   ("p" counsel-projectile nil)
    ("r" helm-recentf nil)
    ("/" helm-find nil)
    ("g" (lambda () (interactive)

@@ -1,4 +1,5 @@
 (require 'projectile)
+(require 'counsel-projectile)
 (projectile-global-mode)
 
 
