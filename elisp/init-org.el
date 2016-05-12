@@ -2,8 +2,8 @@
 
 ;; Common settings for org-mode
 (global-set-key (kbd "<f12>") 'org-agenda)
-(setq org-directory "~/org")
-(setq org-agenda-files (list "~/org"))
+(setq org-directory "~/git/org")
+(setq org-agenda-files (list "~/git/org"))
 (setq org-log-done t)
 (setq org-clock-out-remove-zero-time-clocks t)
 
