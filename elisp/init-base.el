@@ -18,6 +18,8 @@
 (setq display-buffer-reuse-frames t)
 (setq-default indent-tabs-mode nil)
 (setq tab-width 4)
+(prefer-coding-system 'utf-8)
+(set-locale-environment "C")
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
