@@ -6,6 +6,7 @@
   (c-set-offset 'case-label' 4)
   (local-unset-key (kbd "C-."))
   (local-set-key (kbd "C-c C-n") 'fbn/php-insert-namespace)
+  (local-set-key (kbd "C-c C-p") 'fbn/php-goto-parent-class)
   (php-eldoc-enable)
 ;  (ggtags-mode)
   (helm-gtags-mode)
@@ -36,6 +37,15 @@
       (open-line 1))
     (insert "namespace " (s-join "\\" parts) ";")
     (newline)))
+
+;; Add function to go to parent class
+(defun fbn/php-goto-parent-class ()
+  "Add namespace to PHP file"
+  (interactive)
+  (goto-line 1)
+  (if (and (search-forward-regexp "^\\(abstract \\)?class" nil t)
+           (search-forward-regexp "extends " nil t))
+      (helm-gtags-dwim)))
 
 
 (provide 'init-php)
