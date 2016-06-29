@@ -1,7 +1,3 @@
-;;; Initialize cygwin and friends if we are on a windows system
-(if (string-equal system-type "windows-nt")
-    (load "~/.emacs.d/elisp/init-cygwin.el"))
-
 ;;; Emacs package initialization
 (package-initialize)
 
