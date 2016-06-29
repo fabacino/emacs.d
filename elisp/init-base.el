@@ -1,7 +1,3 @@
-;; Windows specific settings
-(if (string-equal system-type "windows-nt")
-    (require 'init-windows))
-
 ;; General settings
 (defalias 'yes-or-no-p 'y-or-n-p)
 (blink-cursor-mode 0)
