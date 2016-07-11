@@ -12,7 +12,7 @@
 (setq org-default-notes-file (concat org-directory "/journal.org"))
 (setq org-capture-templates
       '(("b" "Bookmark" entry (file+headline "bookmarks.org" "NEW")
-         "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+         "* %c%?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
 
         ("h" "Home")
         ("ht" "Todo" entry (file+headline "home/gtd.org" "Tasks")
