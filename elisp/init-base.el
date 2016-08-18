@@ -120,7 +120,7 @@ This is the same as using \\[set-mark-command] with the prefix argument."
   (interactive)
   (while (string= (string (char-after)) " ")
     (delete-char 1)))
-(global-set-key (kbd "C-x M-SPC") 'fbn/just-one-space)
+(global-set-key (kbd "C-c M-SPC") 'fbn/just-one-space)
 
 (defun fbn/frame-title-buffer-name (name)
   "Modify buffer name for main frame title."
