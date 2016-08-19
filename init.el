@@ -19,6 +19,9 @@
  '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
 
 (add-to-list 'load-path (expand-file-name "elisp/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "git/comics/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "git/hackernews/" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "git/swiper/" user-emacs-directory))
 
 ;; General settings
 (require 'init-base)
