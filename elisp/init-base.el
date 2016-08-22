@@ -16,6 +16,7 @@
 (setq tab-width 4)
 (prefer-coding-system 'utf-8)
 (set-locale-environment "C")
+(setq visible-bell t)
 
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
