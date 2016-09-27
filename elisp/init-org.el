@@ -3,7 +3,9 @@
 ;; Common settings for org-mode
 (global-set-key (kbd "<f12>") 'org-agenda)
 (setq org-directory "~/git/org")
-(setq org-agenda-files (list "~/git/org" "~/git/org/home" "~/git/org/office"))
+(setq org-agenda-files (list org-directory
+                             (concat org-directory "/home")
+                             (concat org-directory "/office")))
 (setq org-log-done t)
 (setq org-clock-out-remove-zero-time-clocks t)
 
@@ -21,6 +23,10 @@
          "* %?\n%^T\n")
         ("hj" "Journal" entry (file "home/journal.org")
          "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+        ("hb" "Book" entry (file+headline "home/journal.org" "Books")
+         "* %? %(org-set-tags-to \":BUY:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+        ("hm" "Movie" entry (file+headline "home/journal.org" "Movies")
+         "* %? %(org-set-tags-to \":UNWATCHED:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
 
         ("o" "Office")
         ("ot" "Todo" entry (file+headline "office/gtd.org" "Tasks")
