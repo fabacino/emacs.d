@@ -3,7 +3,6 @@
 (blink-cursor-mode 0)
 (column-number-mode)
 (global-auto-revert-mode)
-(icomplete-mode)
 (show-paren-mode)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
