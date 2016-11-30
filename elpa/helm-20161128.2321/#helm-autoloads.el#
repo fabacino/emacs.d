@@ -1,0 +1,280 @@
+;;; helm-autoloads.el --- automatically extracted autoloads
+;;
+;;; Code:
+(add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
+
+;;;### (autoloads nil "helm-adaptive" "helm-adaptive.el" (22590 54486
+;;;;;;  725974 874000))
+;;; Generated autoloads from helm-adaptive.el
+
+(defvar helm-adaptive-mode nil "\
+Non-nil if Helm-Adaptive mode is enabled.
+See the `helm-adaptive-mode' command
+for a description of this minor mode.
+Setting this variable directly does not take effect;
+either customize it (see the info node `Easy Customization')
+or call the function `helm-adaptive-mode'.")
+
+(custom-autoload 'helm-adaptive-mode "helm-adaptive" nil)
+
+(autoload 'helm-adaptive-mode "helm-adaptive" "\
+Toggle adaptive sorting in all sources.
+
+\(fn &optional ARG)" t nil)
+
+(autoload 'helm-reset-adaptive-history "helm-adaptive" "\
+Delete all `helm-adaptive-history' and his file.
+Useful when you have a old or corrupted `helm-adaptive-history-file'.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-apt" "helm-apt.el" (22590 54486 715974
+;;;;;;  760000))
+;;; Generated autoloads from helm-apt.el
+
+(autoload 'helm-apt "helm-apt" "\
+Preconfigured `helm' : frontend of APT package manager.
+With a prefix arg reload cache.
+
+\(fn ARG)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-bookmark" "helm-bookmark.el" (22590 54486
+;;;;;;  739308 362000))
+;;; Generated autoloads from helm-bookmark.el
+
+(autoload 'helm-bookmarks "helm-bookmark" "\
+Preconfigured `helm' for bookmarks.
+
+\(fn)" t nil)
+
+(autoload 'helm-filtered-bookmarks "helm-bookmark" "\
+Preconfigured helm for bookmarks (filtered by category).
+Optional source `helm-source-bookmark-addressbook' is loaded
+only if external addressbook-bookmark package is installed.
+
+\(fn)" t nil)
+
+(autoload 'helm-addressbook-bookmarks "helm-bookmark" "\
+Preconfigured helm for addressbook bookmarks.
+Need addressbook-bookmark package as dependencie.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-buffers" "helm-buffers.el" (22590 54486
+;;;;;;  712641 388000))
+;;; Generated autoloads from helm-buffers.el
+
+(autoload 'helm-buffers-list "helm-buffers" "\
+Preconfigured `helm' to list buffers.
+
+\(fn)" t nil)
+
+(autoload 'helm-mini "helm-buffers" "\
+Preconfigured `helm' lightweight version (buffer -> recentf).
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-color" "helm-color.el" (22590 54486 732641
+;;;;;;  618000))
+;;; Generated autoloads from helm-color.el
+
+(autoload 'helm-colors "helm-color" "\
+Preconfigured `helm' for color.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-command" "helm-command.el" (22590 54486
+;;;;;;  699307 900000))
+;;; Generated autoloads from helm-command.el
+
+(autoload 'helm-M-x "helm-command" "\
+Preconfigured `helm' for Emacs commands.
+It is `helm' replacement of regular `M-x' `execute-extended-command'.
+
+Unlike regular `M-x' emacs vanilla `execute-extended-command' command,
+the prefix args if needed, can be passed AFTER starting `helm-M-x'.
+When a prefix arg is passed BEFORE starting `helm-M-x', the first `C-u'
+while in `helm-M-x' session will disable it.
+
+You can get help on each command by persistent action.
+
+\(fn ARG &optional COMMAND-NAME)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-config" "helm-config.el" (22590 54486
+;;;;;;  739308 362000))
+;;; Generated autoloads from helm-config.el
+
+(autoload 'helm-configuration "helm-config" "\
+Customize `helm'.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-dabbrev" "helm-dabbrev.el" (22590 54486
+;;;;;;  719308 131000))
+;;; Generated autoloads from helm-dabbrev.el
+
+(autoload 'helm-dabbrev "helm-dabbrev" "\
+Preconfigured helm for dynamic abbreviations.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-elisp" "helm-elisp.el" (22590 54486 735974
+;;;;;;  990000))
+;;; Generated autoloads from helm-elisp.el
+
+(autoload 'helm-lisp-completion-at-point "helm-elisp" "\
+Preconfigured helm for lisp symbol completion at point.
+
+\(fn)" t nil)
+
+(autoload 'helm-complete-file-name-at-point "helm-elisp" "\
+Preconfigured helm to complete file name at point.
+
+\(fn &optional FORCE)" t nil)
+
+(autoload 'helm-lisp-indent "helm-elisp" "\
+
+
+\(fn)" t nil)
+
+(autoload 'helm-lisp-completion-or-file-name-at-point "helm-elisp" "\
+Preconfigured helm to complete lisp symbol or filename at point.
+Filename completion happen if string start after or between a double quote.
+
+\(fn)" t nil)
+
+(autoload 'helm-apropos "helm-elisp" "\
+Preconfigured helm to describe commands, functions, variables and faces.
+In non interactives calls DEFAULT argument should be provided as a string,
+i.e the `symbol-name' of any existing symbol.
+
+\(fn DEFAULT)" t nil)
+
+(autoload 'helm-manage-advice "helm-elisp" "\
+Preconfigured `helm' to disable/enable function advices.
+
+\(fn)" t nil)
+
+(autoload 'helm-locate-library "helm-elisp" "\
+Preconfigured helm to locate elisp libraries.
+
+\(fn)" t nil)
+
+(autoload 'helm-timers "helm-elisp" "\
+Preconfigured `helm' for timers.
+
+\(fn)" t nil)
+
+(autoload 'helm-complex-command-history "helm-elisp" "\
+Preconfigured helm for complex command history.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-elisp-package" "helm-elisp-package.el"
+;;;;;;  (22590 54486 699307 900000))
+;;; Generated autoloads from helm-elisp-package.el
+
+(autoload 'helm-list-elisp-packages "helm-elisp-package" "\
+Preconfigured helm for listing and handling emacs packages.
+
+\(fn ARG)" t nil)
+
+(autoload 'helm-list-elisp-packages-no-fetch "helm-elisp-package" "\
+Preconfigured helm for emacs packages.
+Same as `helm-list-elisp-packages' but don't fetch packages on remote.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-elscreen" "helm-elscreen.el" (22590 54486
+;;;;;;  695974 529000))
+;;; Generated autoloads from helm-elscreen.el
+
+(autoload 'helm-elscreen "helm-elscreen" "\
+Preconfigured helm to list elscreen.
+
+\(fn)" t nil)
+
+(autoload 'helm-elscreen-history "helm-elscreen" "\
+Preconfigured helm to list elscreen in history order.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-eshell" "helm-eshell.el" (22590 54486
+;;;;;;  705974 644000))
+;;; Generated autoloads from helm-eshell.el
+
+(autoload 'helm-esh-pcomplete "helm-eshell" "\
+Preconfigured helm to provide helm completion in eshell.
+
+\(fn)" t nil)
+
+(autoload 'helm-eshell-history "helm-eshell" "\
+Preconfigured helm for eshell history.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-eval" "helm-eval.el" (22590 54486 725974
+;;;;;;  874000))
+;;; Generated autoloads from helm-eval.el
+
+(autoload 'helm-eval-expression "helm-eval" "\
+Preconfigured helm for `helm-source-evaluation-result'.
+
+\(fn ARG)" t nil)
+
+(autoload 'helm-eval-expression-with-eldoc "helm-eval" "\
+Preconfigured helm for `helm-source-evaluation-result' with `eldoc' support. 
+
+\(fn)" t nil)
+
+(autoload 'helm-calcul-expression "helm-eval" "\
+Preconfigured helm for `helm-source-calculation-result'.
+
+\(fn)" t nil)
+
+;;;***
+
+;;;### (autoloads nil "helm-external" "helm-external.el" (22590 54486
+;;;;;;  695974 529000))
+;;; Generated autoloads from helm-external.el
+
+(autoload 'helm-run-external-command "helm-external" "\
+Preconfigured `helm' to run External PROGRAM asyncronously from Emacs.
+If program is already running exit with error.
+You can set your own list of commands with
+`helm-external-commands-list'.
+
+\(fn PROGRAM)" t nil)
+
+;;;***
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; no-update-autoloads: t
+;; End:
+;;; helm-autoloads.el ends here
