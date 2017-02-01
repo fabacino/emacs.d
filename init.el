@@ -12,7 +12,7 @@
     ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
+    (markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
  '(vc-handled-backends nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -53,6 +53,7 @@
 ;; Programming
 (require 'init-perl)
 (require 'init-php)
+(require 'init-python)
 
 ;; Custom key bindings
 (require 'init-custom-keys)
