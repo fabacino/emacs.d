@@ -7,3 +7,6 @@
 [submodule "git/swiper"]
 	path = git/swiper
 	url = https://github.com/fabacino/swiper.git
+[submodule "git/magit"]
+	path = git/magit
+	url = https://github.com/fabacino/magit.git
