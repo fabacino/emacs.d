@@ -26,6 +26,7 @@
 (add-to-list 'load-path (expand-file-name "git/comics" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "git/hackernews" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "git/magit/lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "git/php-mode" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "git/swiper" user-emacs-directory))
 
 ;; General settings

@@ -10,3 +10,6 @@
 [submodule "git/magit"]
 	path = git/magit
 	url = https://github.com/fabacino/magit.git
+[submodule "git/php-mode"]
+	path = git/php-mode
+	url = https://github.com/fabacino/php-mode.git
