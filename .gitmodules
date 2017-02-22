@@ -13,3 +13,6 @@
 [submodule "git/php-mode"]
 	path = git/php-mode
 	url = https://github.com/fabacino/php-mode.git
+[submodule "git/counsel-gtags"]
+	path = git/counsel-gtags
+	url = https://github.com/fabacino/emacs-counsel-gtags.git

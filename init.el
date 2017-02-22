@@ -28,6 +28,7 @@
 (add-to-list 'load-path (expand-file-name "git/magit/lisp" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "git/php-mode" user-emacs-directory))
 (add-to-list 'load-path (expand-file-name "git/swiper" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "git/counsel-gtags" user-emacs-directory))
 
 ;; General settings
 (require 'init-base)
