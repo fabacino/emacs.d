@@ -24,5 +24,19 @@
 (setq magit-completing-read-function 'ivy-completing-read)
 (setq projectile-completion-system 'ivy)
 
+(require 'counsel-gtags)
+(setq counsel-gtags-ignore-case t)
+(setq counsel-gtags-auto-update t)
+(with-eval-after-load 'counsel-gtags
+  (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
+  (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "C-M-.") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "C-c M-d") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "C-c M-r") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "C-c M-s") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "C-c M-p") 'counsel-gtags-pop)
+;  (define-key counsel-gtags-mode-map (kbd "C-c M-n") 'helm-gtags-next-history)
+;  (define-key counsel-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)
+)
 
 (provide 'init-ivy)
