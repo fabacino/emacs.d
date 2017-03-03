@@ -55,6 +55,7 @@
 (require 'init-smart-mode-line)
 
 ;; Programming
+(require 'init-c)
 (require 'init-perl)
 (require 'init-php)
 (require 'init-python)
