@@ -27,6 +27,7 @@
 (require 'counsel-gtags)
 (setq counsel-gtags-ignore-case t)
 (setq counsel-gtags-auto-update t)
+(setq counsel-gtags-use-input-at-point nil)
 (with-eval-after-load 'counsel-gtags
   (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
   (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
