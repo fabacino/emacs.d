@@ -29,7 +29,7 @@
 
 ;; Add function to insert namespace
 (defun fbn/php-insert-namespace ()
-  "Add namespace to PHP file"
+  "Add namespace to PHP file."
   (interactive)
   (let ((parts (butlast (cdr (s-split "/" buffer-file-name)))))
     (if (projectile-project-p)
@@ -43,12 +43,14 @@
 
 ;; Add function to go to parent class
 (defun fbn/php-goto-parent-class ()
-  "Add namespace to PHP file"
+  "Go to parent class."
   (interactive)
   (goto-line 1)
-  (if (and (search-forward-regexp "^\\(abstract \\)?class" nil t)
-           (search-forward-regexp "extends " nil t))
-      (helm-gtags-dwim)))
+  (when (and (search-forward-regexp "^\\(abstract \\)?class" nil t)
+             (search-forward-regexp "extends " nil t))
+    (forward-sexp)
+    (backward-word)
+    (counsel-gtags--select-file 'definition (thing-at-point 'word) nil t)))
 
 
 (provide 'init-php)

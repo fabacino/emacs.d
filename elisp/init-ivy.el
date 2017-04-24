@@ -35,6 +35,7 @@
   (define-key counsel-gtags-mode-map (kbd "C-c M-d") 'counsel-gtags-find-definition)
   (define-key counsel-gtags-mode-map (kbd "C-c M-r") 'counsel-gtags-find-reference)
   (define-key counsel-gtags-mode-map (kbd "C-c M-s") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "C-c M-f") 'counsel-gtags-find-file)
   (define-key counsel-gtags-mode-map (kbd "C-c M-p") 'counsel-gtags-go-backward)
   (define-key counsel-gtags-mode-map (kbd "C-c M-n") 'counsel-gtags-go-forward)
 ;  (define-key counsel-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)
