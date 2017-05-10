@@ -8,6 +8,8 @@
                              (concat org-directory "/office")))
 (setq org-log-done t)
 (setq org-clock-out-remove-zero-time-clocks t)
+(setq org-goto-interface 'outline-path-completion)
+(setq org-outline-path-complete-in-steps nil)
 
 ;; Settings for org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
