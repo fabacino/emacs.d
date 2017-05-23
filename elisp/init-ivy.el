@@ -24,6 +24,15 @@
 (setq magit-completing-read-function 'ivy-completing-read)
 (setq projectile-completion-system 'ivy)
 
+(require 'org)
+(setq counsel-org-goto-display-style 'path)
+(setq counsel-org-goto-separator " ➜ ")
+(setq counsel-org-goto-face-style 'org)
+(setq counsel-org-goto-display-tags nil)
+(setq counsel-org-goto-display-todo t)
+(define-key org-mode-map (kbd "C-c C-j") 'counsel-org-goto)
+(define-key org-mode-map (kbd "C-u C-c C-j") 'counsel-org-goto-all)
+
 (require 'counsel-gtags)
 (setq counsel-gtags-ignore-case t)
 (setq counsel-gtags-auto-update t)

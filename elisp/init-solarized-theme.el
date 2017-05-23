@@ -90,7 +90,6 @@
 
         ;;; ivy
         (set-face-foreground 'ivy-modified-buffer cyan)
-        (set-face-foreground 'ivy-path-face secondary-content)
         (set-face-attribute 'ivy-virtual nil :slant 'italic :weight 'normal)
 
         )))
