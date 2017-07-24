@@ -72,7 +72,7 @@ _g_: gnu project       _p_: find package             ^ ^                    _C-t
 _h_: hello file        _P_: package                  ^ ^                    _C-w_: no-warranty           
 "
    ("a" helm-apropos nil)
-   ("b" describe-bindings nil)
+   ("b" counsel-descbinds nil)
    ("c" describe-key-briefly nil)
    ("C" describe-coding-system nil)
    ("d" apropos-documentation nil)
