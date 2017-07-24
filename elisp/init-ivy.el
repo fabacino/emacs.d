@@ -1,9 +1,11 @@
 (require 'swiper)
 
 (ivy-mode 1)
+(counsel-mode 1)
 (setq ivy-use-virtual-buffers t)
 (setq ivy-count-format "(%d/%d) ")
 (setq ivy-height 11)
+(setq ivy-use-selectable-prompt t)
 
 (global-set-key (kbd "C-M-s") 'swiper)
 (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
