@@ -1,4 +1,5 @@
 (require 'org)
+(require 'org-id)
 
 ;; Common settings for org-mode
 (global-set-key (kbd "<f12>") 'org-agenda)
