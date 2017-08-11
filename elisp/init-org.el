@@ -70,6 +70,38 @@
 (require 'ob-shell)
 (require 'ob-python)
 
+(defun fbn/org-remove-inherited-tags ()
+  "Remove inherited tags from the headline at point."
+  (interactive)
+  (let ((current-tags (org-get-tags))
+        inherited-tags)
+    ;; Get inherited tags.
+    (org-set-tags-to nil)
+    (setq inherited-tags
+          (mapcar
+           #'(lambda (x)
+               (if (text-properties-at 0 x)
+                   (substring-no-properties x)
+                 nil))
+           (org-get-tags-at)))
+    (org-set-tags-to current-tags)
+    ;; Remove tags already inherited.
+    (dolist (tag (org-get-tags))
+      (when (member tag inherited-tags)
+        (org-toggle-tag tag 'off)))))
+
+(defun fbn/org-remove-all-inherited-tags ()
+  "Remove inherited tags from all the headlines."
+  (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (let ((start-pos (or (and (org-at-heading-p)
+                              (point))
+                         (outline-next-heading))))
+      (while start-pos
+        (fbn/org-remove-inherited-tags)
+        (setq start-pos (outline-next-heading))))))
+
 ;; Punch-in/-out functionality
 (setq bh/keep-clock-running nil)
 
