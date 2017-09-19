@@ -11,6 +11,8 @@
 (setq org-clock-out-remove-zero-time-clocks t)
 (setq org-goto-interface 'outline-path-completion)
 (setq org-outline-path-complete-in-steps nil)
+(setq org-agenda-clockreport-parameter-plist
+      '(:link t :maxlevel 5 :fileskip0 t :narrow 80 :formula %))
 
 ;; Settings for org-capture
 (global-set-key (kbd "C-c c") 'org-capture)
