@@ -84,9 +84,10 @@
         (set-face-foreground 'aw-background-face secondary-content)
 
         ;;; hackernews
-        (set-face-foreground 'hackernews-link-face emphasized-content)
-        (set-face-foreground 'hackernews-comment-count-face secondary-content)
-        (set-face-foreground 'hackernews-score-face primary-content)
+        (set-face-foreground 'hackernews-link emphasized-content)
+        (set-face-attribute 'hackernews-link nil :weight 'normal)
+        (set-face-foreground 'hackernews-comment-count secondary-content)
+        (set-face-foreground 'hackernews-score primary-content)
 
         ;;; ivy
         (set-face-foreground 'ivy-modified-buffer cyan)
