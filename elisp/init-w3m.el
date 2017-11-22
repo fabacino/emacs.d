@@ -1,7 +1,13 @@
 (require 'w3m)
+(require 'w3m-search)
 
 (global-set-key (kbd "<f8>") 'w3m-goto-url-new-session)
 (setq browse-url-browser-function 'w3m-goto-url-new-session)
+
+;; Use startpage to search things.
+(add-to-list 'w3m-search-engine-alist
+             '("startpage" "https://www.startpage.com/do/search" utf-8 "query=%s"))
+(setq w3m-search-default-engine "startpage")
 
 (defun fbn/w3m-hook ()
   (local-set-key (kbd "M") 'w3m-view-url-with-browse-url))
