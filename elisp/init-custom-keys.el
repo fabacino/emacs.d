@@ -12,7 +12,7 @@
   (global-set-key (kbd (concat prefix-command "SPC")) 'helm-all-mark-rings)
   (global-set-key (kbd (concat prefix-command "TAB")) 'helm-lisp-completion-at-point)
 ;  (global-set-key (kbd (concat prefix-command "/")) 'helm-find)
-  )
+  (global-set-key (kbd (concat prefix-command "C-c C-r")) 'ivy-resume))
 
 ;; Use C-h as backspace
 (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
