@@ -10,7 +10,7 @@
 (global-set-key (kbd "C-M-s") 'swiper)
 (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
 (global-set-key (kbd "M-y") 'counsel-yank-pop)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(fbn/global-set-key "C-c C-r" 'ivy-resume)
 ;(global-set-key (kbd "<f6>") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 (global-set-key (kbd "C-x C-f") 'counsel-find-file)
