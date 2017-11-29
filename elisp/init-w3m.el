@@ -6,7 +6,7 @@
 
 ;; Use startpage to search things.
 (add-to-list 'w3m-search-engine-alist
-             '("startpage" "https://www.startpage.com/do/search" utf-8 "query=%s"))
+             '("startpage" "https://www.startpage.com/do/search?query=%s" utf-8))
 (setq w3m-search-default-engine "startpage")
 
 (defun fbn/w3m-hook ()
