@@ -122,6 +122,16 @@ This is the same as using \\[set-mark-command] with the prefix argument."
     (delete-char 1)))
 (global-set-key (kbd "C-c M-SPC") 'fbn/just-one-space)
 
+(defun fbn/global-set-key (keys command &optional fallback-only)
+  "Give KEY a global binding as COMMAND.
+Same as `global-set-key' but include a fallback key binding to make sure
+COMMAND is available even if it is overridden by a local binding.
+If FALLBACK-ONLY is non-nil, only register the fallback binding."
+  (let ((prefix-command "C-c f "))
+    (when (not fallback-only)
+      (global-set-key (kbd keys) command))
+    (global-set-key (kbd (concat prefix-command keys)) command)))
+
 (defun fbn/frame-title-buffer-name (name)
   "Modify buffer name for main frame title."
   name)
