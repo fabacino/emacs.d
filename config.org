@@ -1,0 +1,1258 @@
+#+TITLE: CONFIG
+#+DATE: <2017-12-04 Mon>
+#+AUTHOR: Fabian Wiget
+
+* Introduction
+  :PROPERTIES:
+  :STARTUP:  lj
+  :END:
+
+  `init.el` contains only the code below.
+  
+#+BEGIN_SRC emacs-lisp :tangle no
+  ;; Initialize Emacs packages.
+  (package-initialize)
+  (setq package-enable-at-startup nil)
+
+  ;; Load init file in org format.
+  (require 'org)
+  (org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
+
+  ;; Load custom settings.
+  (let ((custom-file (expand-file-name "custom.org" user-emacs-directory)))
+    (when (file-exists-p custom-file)
+      (org-babel-load-file custom-file)))
+#+END_SRC
+
+* Package initialization
+
+* Custom variables
+
+#+BEGIN_SRC emacs-lisp
+  ;;; Emacs package initialization
+
+  (custom-set-variables
+   ;; custom-set-variables was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(custom-enabled-themes (quote (solarized-dark)))
+   '(custom-safe-themes
+     (quote
+      ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+   '(package-selected-packages
+     (quote
+      (pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm))))
+  (custom-set-faces
+   ;; custom-set-faces was added by Custom.
+   ;; If you edit it by hand, you could mess it up, so be careful.
+   ;; Your init file should contain only one such instance.
+   ;; If there is more than one, they won't work right.
+   '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "DejaVu Sans Mono")))))
+#+END_SRC
+
+* Load directories
+
+  Emacs loads a package from the first directory in `load-path` which contains it. Directories
+  added here take precedence over default ones.
+
+** Init packages
+
+   These are custom packages made for the sole purpose of avoiding a single huge init file.
+   The directory should probably be renamed to `site-lisp`.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+#+END_SRC
+
+** Git sources
+
+#+BEGIN_SRC emacs-lisp
+  (let ((repos '("comics"
+                 "hackernews"
+                 "magit/lisp"
+                 "php-mode"
+                 "swiper"
+                 "counsel-gtags")))
+    (dolist (repo repos)
+      (add-to-list
+       'load-path
+       (expand-file-name (concat "git/" repo) user-emacs-directory))))
+#+END_SRC
+
+* Settings
+** Basic settings
+
+#+BEGIN_SRC emacs-lisp
+  ;; General settings
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (blink-cursor-mode 0)
+  (column-number-mode)
+  (global-auto-revert-mode)
+  (show-paren-mode)
+  (menu-bar-mode 0)
+  (tool-bar-mode 0)
+  (scroll-bar-mode 0)
+  (winner-mode)
+
+  (setq confirm-kill-emacs 'y-or-n-p)
+  (setq display-buffer-reuse-frames t)
+  (setq-default indent-tabs-mode nil)
+  (setq tab-width 4)
+  (prefer-coding-system 'utf-8)
+  (set-locale-environment "C")
+  (setq visible-bell t)
+
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+  ;(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+
+  ;; Enable disabled commands
+  (put 'downcase-region 'disabled nil)
+  (put 'upcase-region 'disabled nil)
+
+  ;; Add abbrev from expansion: C-x a g
+  ;; Add abbrev from abbreviation: C-x a i g
+  (setq-default abbrev-mode t)
+
+  ;; Use hydra for better organisation of keybindings
+  (require 'hydra)
+
+  ;; ediff configuration
+  (require 'ediff)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  (setq ediff-split-window-function 'split-window-horizontally)
+
+  ;; Use ibuffer for listing buffers
+  (defalias 'list-buffers 'ibuffer)
+  (setq ibuffer-formats (quote ((mark modified read-only " " (name 36 36 :left :elide) " " (size 9 -1 :right) " " (mode 20 20 :left :elide) " " filename-and-process) (mark " " (name 16 -1) " " filename))))
+
+  ;; Use ido
+  ;; ido-mode is left diabled since helm has support for ido
+  (setq ido-enable-flex-matching nil)
+  (setq ido-everywhere nil)
+
+  ;; Use recentf
+  (recentf-mode t)
+  (setq recentf-max-saved-items 100)
+
+  ;; Use transpose-frame
+  (require 'transpose-frame)
+
+  ;; Use uniquifiy
+  (require 'uniquify)
+  (setq uniquify-buffer-name-style 'post-forward)
+
+  ;; Use windmove to move around windows more naturally
+  (if (string-equal system-type "windows-nt")
+    (progn
+      (windmove-default-keybindings 'meta)
+      (global-set-key (kbd "<apps> s") 'windmove-left)
+      (global-set-key (kbd "<apps> e") 'windmove-up)
+      (global-set-key (kbd "<apps> d") 'windmove-down)
+      (global-set-key (kbd "<apps> f") 'windmove-right))
+    (progn
+      (windmove-default-keybindings 'super)
+      (global-set-key (kbd "C-s-j") 'windmove-left)
+      (global-set-key (kbd "C-s-i") 'windmove-up)
+      (global-set-key (kbd "C-s-k") 'windmove-down)
+      (global-set-key (kbd "C-s-l") 'windmove-right)))
+#+END_SRC
+
+** Custom functions
+
+#+BEGIN_SRC emacs-lisp
+  (defun goto-previous-occurrence ()
+    "Backward search word/char at point."
+    (interactive)
+    (execute-kbd-macro [?\C-r ?\C-w ?\C-r return]))
+  (global-set-key (kbd "M-p") 'goto-previous-occurrence)
+
+  (defun goto-next-occurrence ()
+    "Forward search word/char at point."
+    (interactive)
+    (execute-kbd-macro [?\C-s ?\C-w ?\C-s return ?\M-b]))
+  (global-set-key (kbd "M-n") 'goto-next-occurrence)
+
+  (defun push-mark-no-activate ()
+    "Pushes `point' to `mark-ring' and does not activate the region.
+  Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled."
+    (interactive)
+    (push-mark (point) t nil)
+    (message "Pushed mark to ring"))
+  (global-set-key (kbd "C-,") 'push-mark-no-activate)
+
+  (defun jump-to-mark ()
+    "Jumps to the local mark, respecting the `mark-ring' order.
+  This is the same as using \\[set-mark-command] with the prefix argument."
+    (interactive)
+    (set-mark-command 1))
+  (global-set-key (kbd "C-.") 'jump-to-mark)
+
+  (defun kill-this-buffer ()
+    "Kill current buffer."
+    (interactive) 
+    (kill-buffer (current-buffer)))
+  (global-set-key (kbd "C-x k") 'kill-this-buffer)
+
+  (defun create-temporary-file ()
+    "Create temporary file."
+    (interactive)
+    (let* ((index 0)
+           (tmp-file (make-temp-file "emacs_")))
+      (while (get-buffer (concat "tmp" (number-to-string index)))
+        (incf index))
+      (find-file tmp-file)
+      (rename-buffer (concat "tmp" (number-to-string index)))))
+  (global-set-key (kbd "<f5>") 'create-temporary-file)
+
+  (defun fbn/just-one-space ()
+    "Delete all whitespace from point."
+    (interactive)
+    (while (string= (string (char-after)) " ")
+      (delete-char 1)))
+  (global-set-key (kbd "C-c M-SPC") 'fbn/just-one-space)
+
+  (defun fbn/global-set-key (keys command &optional fallback-only)
+    "Give KEY a global binding as COMMAND.
+  Same as `global-set-key' but include a fallback key binding to make sure
+  COMMAND is available even if it is overridden by a local binding.
+  If FALLBACK-ONLY is non-nil, only register the fallback binding."
+    (let ((prefix-command "C-c f "))
+      (when (not fallback-only)
+        (global-set-key (kbd keys) command))
+      (global-set-key (kbd (concat prefix-command keys)) command)))
+
+  (defun fbn/frame-title-buffer-name (name)
+    "Modify buffer name for main frame title."
+    name)
+
+  (defun fbn/set-frame-title-format (&optional prefix)
+    "Set format used for main frame title.
+  If PREFIX is not given, the variable `system-name' is used. For buffers
+  associated with a file the full path is shown. Modifications can be made
+  through the function `fbn/frame-title-buffer-name'."
+    (interactive "sPrefix: ")
+    (setq frame-title-format
+          (list (format "%s %%S: %%j" (if prefix prefix (system-name)))
+                '(:eval (if (buffer-file-name)
+                            (fbn/frame-title-buffer-name buffer-file-name)
+                          (buffer-name))))))
+  (fbn/set-frame-title-format)
+
+  ;; Use mozc for japanese input
+  ;(set-language-environment "Japanese")
+  ;(if (featurep 'mozc)
+  ;    (progn
+  ;      (require 'mozc)
+  ;      (setq default-input-method "japanese-mozc")))
+
+  ;; Use japanese font for kanji
+  ;; Unfortunately, setting the font does not work when emacs is used in daemon
+  ;; mode. We therefore use a function, so we can call it later in case the font
+  ;; has not been set correctly.
+  (defun fbn/set-jp-font ()
+    (interactive)
+    (set-fontset-font "fontset-default" 'japanese-jisx0208
+                      (font-spec :family "Source Han Sans JP" :size 14)))
+  (fbn/set-jp-font)
+#+END_SRC
+
+** General packages
+*** ace
+#+BEGIN_SRC emacs-lisp
+  (require 'ace-window)
+  (global-set-key (kbd "C-x o") 'ace-window)
+  (fbn/global-set-key "M-o" 'ace-window)
+  (fbn/global-set-key "C-u M-o"
+                      (lambda() (interactive)
+                        (let ((current-prefix-arg '(4)))
+                          (call-interactively 'ace-window)))
+                      t)
+
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (setq aw-scope 'frame)
+#+END_SRC
+*** auto-complete
+#+BEGIN_SRC emacs-lisp
+  (require 'auto-complete-config)
+  (ac-config-default)
+  (setq ac-auto-start nil)
+  ;(add-to-list 'ac-dictionary-directories "~/.emacs.d/elpa/auto-complete-20150618.1949/dict")
+  (setq ac-sources '(ac-source-abbrev ac-source-dictionary ac-source-words-in-same-mode-buffers))
+  ;(defun ac-common-setup ()
+  ;  (setq ac-sources '(ac-source-abbrev  ac-source-dictionary ac-source-words-in-same-mode-buffers)))
+  (define-key ac-mode-map (kbd "M-TAB") 'auto-complete) ; aka C-M-i
+#+END_SRC
+*** avy
+#+BEGIN_SRC emacs-lisp
+  (require 'avy)
+  (global-set-key (kbd "C-c SPC") 'avy-goto-char)
+  (global-set-key (kbd "C-c C-SPC") 'avy-goto-word-or-subword-1)
+  (global-set-key (kbd "M-g g") 'avy-goto-line)
+  (global-set-key (kbd "M-g M-g") 'avy-goto-line)
+
+  (define-key isearch-mode-map (kbd "M-g") 'avy-isearch)
+#+END_SRC
+*** comics
+#+BEGIN_SRC emacs-lisp
+  (require 'comics)
+#+END_SRC
+*** dired
+#+BEGIN_SRC emacs-lisp
+  (require 'dired+)
+
+  ;; Adjust dired functions for locate-mode
+  ;; This does not work out of the box for windows
+  (when (string-equal system-type "windows-nt")
+    (require 'dired)
+    (defadvice dired-get-filename (before fbn/dired-get-filename-advise activate)
+      "Locate lists full paths, therefore we always want the filename on each line to be
+  interpreted verbatim."
+      (if (equal major-mode 'locate-mode)
+          (ad-set-arg 0 'verbatim))))
+#+END_SRC
+*** emms
+#+BEGIN_SRC emacs-lisp :tangle no
+  (require 'emms-setup)
+  (emms-all)
+  (emms-default-players)
+
+  ;(setq emms-info-asynchronously nil)
+  ;     (setq emms-playlist-buffer-name "*Music*")
+  (setq emms-source-file-directory-tree-function 'emms-source-file-directory-tree-find)
+  (setq emms-source-file-default-directory "~/Music/")
+  (global-set-key (kbd "<f7>") 'emms-smart-browse)
+  (setq emms-info-mp3info-program-name "mp3infov2")
+
+  ;; Add disc number to arguments otherwise the sort order is not
+  ;; correct for albums with multiple discs
+  (let ((tail (cdr emms-info-mp3find-arguments)))
+    (setcar tail (concat (car tail) "info-discnumber=%d\\n"))
+    (setcdr emms-info-mp3find-arguments tail))
+  emms-info-mp3find-arguments
+
+  (define-key emms-browser-mode-map (kbd "g") 'fbn/emms-browser-info-reload)
+  (define-key emms-playlist-mode-map (kbd "g") 'fbn/emms-playlist-info-reload)
+
+  (defun fbn/emms-browser-info-reload ()
+    (interactive)
+    (fbn/emms-info-reload (emms-browser-tracks-at-point)))
+
+  (defun fbn/emms-playlist-info-reload ()
+    (interactive)
+    (fbn/emms-info-reload (list (emms-playlist-track-at))))
+  
+  (defun fbn/emms-info-reload (tracks)
+    (mapc (lambda (track)
+            (let ((filename (emms-track-name track)))
+              (emms-cache-del filename)
+              (emms-add-file filename)))
+          tracks))
+#+END_SRC
+*** flycheck
+#+BEGIN_SRC emacs-lisp
+  (require 'flycheck)
+  (setq flycheck-check-syntax-automatically '(save))
+  (setq flycheck-highlighting-mode 'lines)
+#+END_SRC
+*** ggtags
+#+BEGIN_SRC emacs-lisp
+  ;; Dropped in favor of counsel-gtags
+  ;(require 'ggtags)
+  ;(setq ggtags-global-abbreviate-filename 70)
+  ;(setq ggtags-global-ignore-case t)
+  ;(setq ggtags-oversize-limit 1048576)
+#+END_SRC
+*** grep-a-lot
+#+BEGIN_SRC emacs-lisp
+  (require 'grep-a-lot)
+  (grep-a-lot-setup-keys)
+
+  ;; Append search string to buffer name
+  (let ((regexp grep-a-lot-buffer-name-regexp))
+    ;; Change regular expression in order to keep grep-a-lot from recognizing its buffers
+    (if (equal (substring regexp -1) "$")
+        (setq regexp (substring regexp 0 -1)))
+    (setq grep-a-lot-buffer-name-regexp (concat regexp ".*$")))
+  (defmacro fbn/grep-a-lot-advise (func)
+    "Advise a grep-like function FUNC to include the search string in its buffer name."
+    (let ((name (make-symbol (concat "fbn/" (symbol-name func) "-advise"))))
+      `(defadvice ,func (after ,name activate)
+         "Append search string used for grep to buffer name"
+         (let ((search-string (ad-get-arg 0))
+               (grep-buffer (grep-a-lot-last-buffer)))
+           (with-current-buffer grep-buffer
+             (rename-buffer (concat (buffer-name grep-buffer) "|" search-string)))))))
+  (fbn/grep-a-lot-advise grep)
+  (fbn/grep-a-lot-advise lgrep)
+  (fbn/grep-a-lot-advise rgrep)
+#+END_SRC
+*** hackernews
+#+BEGIN_SRC emacs-lisp
+  (require 'hackernews)
+  (setq hackernews-top-story-limit 25)
+#+END_SRC
+*** helm
+#+BEGIN_SRC emacs-lisp
+  (require 'helm-config)
+  ;(helm-mode t)
+  (setq helm-buffers-fuzzy-matching t)
+  ;(setq helm-buffer-max-length 36)
+  (setq helm-ff-file-name-history-use-recentf t)
+  (setq helm-move-to-line-cycle-in-source t)
+  (setq helm-quick-update t)
+  (setq helm-scroll-amount 8)
+  (setq helm-split-window-in-side-p t)
+
+  ;; Keybindings
+  ;(global-set-key (kbd "M-x") 'helm-M-x)
+  ;;(global-set-key (kbd "C-x b") 'helm-buffers-list)
+  ;(global-set-key (kbd "C-x b") 'helm-mini)
+  ;(global-set-key (kbd "C-x C-f") 'helm-find-files)
+  ;; Switch TAB und C-z
+  ;(define-key helm-map (kbd "TAB") 'helm-execute-persistent-action)
+  ;(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB work in terminal
+  ;(define-key helm-map (kbd "C-z") 'helm-select-action)
+  ;; C-o is helm-next-source
+  ;(define-key helm-map (kbd "M-o") 'helm-previous-source)
+
+  ;; History functions
+  ;(require 'helm-eshell)
+  ;(defun fbn/eshell-mode-hook ()
+  ;  (define-key eshell-mode-map (kbd "C-c C-l")  'helm-eshell-history))
+  ;(add-hook 'eshell-mode-hook 'fbn/eshell-mode-hook)
+  ;(define-key shell-mode-map (kbd "C-c C-l") 'helm-comint-input-ring)
+  ;(define-key minibuffer-local-map (kbd "C-c C-l") 'helm-minibuffer-history)
+
+  ;; helm for auto-complete
+  (require 'ac-helm)
+  (define-key ac-mode-map (kbd "M-i") 'ac-complete-with-helm)
+
+  ;; helm-do-grep was considered useless and thus deleted. I still think
+  ;; it is pretty useful, since it is much faster to invoke than doing
+  ;; helm-find-files or friends and select the grep action.
+  (defun fbn/helm-do-grep ()
+    "Preconfigured helm for grep.
+  Contrarily to Emacs `grep', no default directory is given, but
+  the full path of candidates in ONLY.
+  That allow to grep different files not only in `default-directory' but anywhere
+  by marking them (C-<SPACE>). If one or more directory is selected
+  grep will search in all files of these directories.
+  You can also use wildcard in the base name of candidate.
+  If a prefix arg is given use the -r option of grep (recurse).
+  The prefix arg can be passed before or after start file selection.
+  See also `helm-do-grep-1'."
+    (interactive)
+    (require 'helm-mode)
+    (let* ((preselection (buffer-file-name (current-buffer)))
+           (only    (helm-read-file-name
+                     "Search in file(s): "
+                     :marked-candidates t
+                     :preselect (if (and preselection
+                                         helm-ff-transformer-show-only-basename)
+                                    (helm-basename preselection)
+                                  preselection)))
+           (prefarg (or current-prefix-arg helm-current-prefix-arg)))
+      (helm-do-grep-1 only prefarg)))
+
+  ;; helm-multi-occur was deleted as well...
+  (defun fbn/helm-multi-occur ()
+    "Preconfigured helm for multi occur.
+  With a prefix arg, reverse the behavior of
+  `helm-moccur-always-search-in-current'.
+  The prefix arg can be set before calling
+  `helm-multi-occur-from-isearch' or during the buffer selection."
+    (interactive)
+    (let ((buf-list (helm-comp-read "Buffers: "
+                                     (helm-buffer-list)
+                                     :name "Occur in buffer(s)"
+                                     :marked-candidates t))
+          (helm-moccur-always-search-in-current
+           (if (or current-prefix-arg
+                    helm-current-prefix-arg)
+                (not helm-moccur-always-search-in-current)
+              helm-moccur-always-search-in-current)))
+      (helm-multi-occur-1 buf-list)))
+
+  ;; helm-gtags
+  (require 'helm-gtags)
+  (require 's)
+  (setq helm-gtags-ignore-case t)
+  (setq helm-gtags-auto-update t)
+  (setq helm-gtags-use-input-at-cursor t)
+  (setq helm-gtags-maximum-candidates 1000)
+  (eval-after-load "helm-gtags"
+    '(progn
+       (define-key helm-gtags-mode-map (kbd "M-.") 'helm-gtags-dwim)
+       (define-key helm-gtags-mode-map (kbd "M-]") 'helm-gtags-find-rtag)
+       (define-key helm-gtags-mode-map (kbd "C-M-.") 'helm-gtags-select)
+       (define-key helm-gtags-mode-map (kbd "C-c M-p") 'helm-gtags-previous-history)
+       (define-key helm-gtags-mode-map (kbd "C-c M-n") 'helm-gtags-next-history)
+       (define-key helm-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)))
+
+  ;; Add function to show definition
+  (defvar fbn/helm-gtags-definitions-first-call t)
+
+  ;; Error signal if there is only a single definition available
+  (define-error 'fbn/helm-gtags--error-single-definition "There is only a single definition available")
+
+  (defun fbn/helm-gtags-show-definition (tag)
+    "Display function definition.
+  If there is only a single interface available when this function is invoked,
+  the interface will be displayed in the echo-area. Otherwise a normal helm
+  buffer is opened."
+    (interactive
+     (list (helm-gtags--read-tagname 'tag)))
+    (setq fbn/helm-gtags-definitions-first-call t)
+    (unwind-protect
+        (progn
+          (advice-add 'helm :around #'fbn/helm/disable-action-at-once-if-one)
+          (condition-case data
+              (helm-gtags--common '(fbn/helm-source-gtags-definitions) tag)
+            (fbn/helm-gtags--error-single-definition
+             (let (message-log-max)
+               (message "%s" (cadr data))))))
+      (advice-remove 'helm #'fbn/helm/disable-action-at-once-if-one)))
+
+  (defvar fbn/helm-source-gtags-definitions
+    (helm-build-in-buffer-source "Display definitions"
+      :init 'fbn/helm-gtags--definitions-init
+      :candidate-number-limit helm-gtags-maximum-candidates
+      :filtered-candidate-transformer 'fbn/helm-gtags--definitions-transformer
+      :real-to-display 'helm-gtags--candidate-transformer
+      :persistent-action 'helm-gtags--persistent-action
+      :fuzzy-match helm-gtags-fuzzy-match
+      :action helm-gtags--find-file-action))
+
+  (defun fbn/helm-gtags--definitions-init (&optional input)
+    (helm-gtags--exec-global-command 'tag input))
+
+  (defun fbn/helm-gtags--definitions-transformer (candidates source)
+    "Throw signal if the function interface is the same for all entries."
+    (if fbn/helm-gtags-definitions-first-call
+        (progn
+          (let ((unique-candidates (make-hash-table :test 'equal))
+                (unique-value))
+            (mapcar (lambda (entry)
+                      (let* ((separator ":")
+                             (value (cdr entry))
+                             (parts (split-string value separator))
+                             (removed-parts (s-concat (s-join separator (butlast parts 1)) separator)))
+                        (setq value (s-replace removed-parts "" value))
+                        (puthash value t unique-candidates)
+                        (setq unique-value (s-replace removed-parts "" (car entry))))) candidates)
+            (if (eq (hash-table-count unique-candidates) 1)
+                (signal 'fbn/helm-gtags--error-single-definition (list (s-trim unique-value)))))))
+    (setq fbn/helm-gtags-definitions-first-call nil)
+    (car (list candidates)))
+
+  (defun fbn/helm/disable-action-at-once-if-one (orig-fun &rest plist)
+    "Advice for helm to not execute the action in case there is only one entry available."
+    (let ((helm-execute-action-at-once-if-one nil))
+      (apply orig-fun plist)))
+#+END_SRC
+*** ivy
+#+BEGIN_SRC emacs-lisp
+  (require 'swiper)
+
+  (ivy-mode 1)
+  (counsel-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-height 11)
+  (setq ivy-use-selectable-prompt t)
+
+  (global-set-key (kbd "C-M-s") 'swiper)
+  (define-key isearch-mode-map (kbd "M-i") 'swiper-from-isearch)
+  (global-set-key (kbd "M-y") 'counsel-yank-pop)
+  (fbn/global-set-key "C-c C-r" 'ivy-resume)
+  ;(global-set-key (kbd "<f6>") 'ivy-resume)
+  (global-set-key (kbd "M-x") 'counsel-M-x)
+  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  ;(global-set-key (kbd "<f1> l") 'counsel-load-library)
+  ;(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
+  ;(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
+  ;(global-set-key (kbd "C-c g") 'counsel-git)
+  ;(global-set-key (kbd "C-c j") 'counsel-git-grep)
+  ;(global-set-key (kbd "C-c k") 'counsel-ag)
+  ;(global-set-key (kbd "C-x l") 'counsel-locate)
+  ;(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+
+  (setq magit-completing-read-function 'ivy-completing-read)
+  (setq projectile-completion-system 'ivy)
+
+  (require 'org)
+  (setq counsel-org-goto-display-style 'path)
+  (setq counsel-org-goto-separator " ➜ ")
+  (setq counsel-org-goto-face-style 'org)
+  (setq counsel-org-goto-display-tags nil)
+  (setq counsel-org-goto-display-todo t)
+  (define-key org-mode-map (kbd "C-c C-j") 'counsel-org-goto)
+  (define-key org-mode-map (kbd "C-u C-c C-j") 'counsel-org-goto-all)
+
+  (require 'counsel-gtags)
+  (setq counsel-gtags-ignore-case t)
+  (setq counsel-gtags-auto-update t)
+  (setq counsel-gtags-use-input-at-point nil)
+  (with-eval-after-load 'counsel-gtags
+    (define-key counsel-gtags-mode-map (kbd "M-.") 'counsel-gtags-dwim)
+    (define-key counsel-gtags-mode-map (kbd "M-]") 'counsel-gtags-find-reference)
+    (define-key counsel-gtags-mode-map (kbd "C-M-.") 'counsel-gtags-find-definition)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-d") 'counsel-gtags-find-definition)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-r") 'counsel-gtags-find-reference)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-s") 'counsel-gtags-find-symbol)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-f") 'counsel-gtags-find-file)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-p") 'counsel-gtags-go-backward)
+    (define-key counsel-gtags-mode-map (kbd "C-c M-n") 'counsel-gtags-go-forward)
+  ;  (define-key counsel-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)
+  )
+#+END_SRC
+*** locate
+#+BEGIN_SRC emacs-lisp
+  (require 'locate)
+  (defun fbn/locatify ()
+    "Convert a buffer with absolute filenames to match one generated by `locate'.
+  It comes in handy when restoring files from a crash."
+    (interactive
+     (progn
+       (let ((inhibit-read-only t)
+             (num-temp-files 0))
+         ;; Remove temporary files
+         (goto-char (point-min))
+         (while (re-search-forward "^.+#.+#$" nil t)
+           (progn
+             (replace-match "" nil nil)
+             (kill-line)
+             (incf num-temp-files)))
+         (message "%i temporary files removed" num-temp-files)
+         ;; Convert to match locate buffer
+         (goto-char (point-min))
+         (while (re-search-forward "^\\(.\\)" nil t)
+           (replace-match "    \\1" nil nil))
+         (goto-char (point-min))
+         (insert "  /:
+   Matches for *:
+
+  "))
+       (forward-char 4)
+       (locate-mode))))
+#+END_SRC
+*** magit
+#+BEGIN_SRC emacs-lisp
+  (require 'magit)
+  (setq magit-last-seen-setup-instructions "1.4.0")
+#+END_SRC
+*** org
+#+BEGIN_SRC emacs-lisp
+  (require 'org)
+  (require 'org-id)
+
+  ;; Make export to markdown available.
+  (add-to-list 'org-export-backends 'md)
+
+  ;; Common settings for org-mode
+  (global-set-key (kbd "<f12>") 'org-agenda)
+  (setq org-directory "~/git/org")
+  (setq org-agenda-files (list org-directory
+                               (concat org-directory "/home")
+                               (concat org-directory "/office")))
+  (setq org-log-done t)
+  (setq org-clock-out-remove-zero-time-clocks t)
+  (setq org-goto-interface 'outline-path-completion)
+  (setq org-outline-path-complete-in-steps nil)
+  (setq org-agenda-clockreport-parameter-plist
+        '(:link t :maxlevel 5 :fileskip0 t :narrow 80 :formula %))
+
+  ;; Settings for org-capture
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (setq org-default-notes-file (concat org-directory "/journal.org"))
+  (setq org-capture-templates
+        '(("b" "Bookmark" entry (file+headline "bookmarks.org" "NEW")
+           "* %c%?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+
+          ("h" "Home")
+          ("ht" "Todo" entry (file+headline "home/gtd.org" "Tasks")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hc" "Calendar" entry (file+headline "home/gtd.org" "Calendar")
+           "* %?\n%^T\n")
+          ("hj" "Journal" entry (file "home/journal.org")
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hr" "Read")
+          ("hrb" "Book" entry (file+headline "home/read.org" "Books")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hre" "E-Book" entry (file+headline "home/read.org" "E-Books")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hw" "Watch")
+          ("hwa" "Anime" entry (file+headline "home/watch.org" "Anime")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hwd" "Dorama" entry (file+headline "home/watch.org" "Dorama")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hwm" "Movie" entry (file+headline "home/watch.org" "Movies")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("hws" "Series" entry (file+headline "home/watch.org" "Series")
+           "* NEW %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+
+          ("o" "Office")
+          ("ot" "Todo" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("oc" "Calendar" entry (file+headline "office/gtd.org" "Calendar")
+           "* %?\n%^T\n")
+          ("oj" "Journal" entry (file  "office/journal.org")
+           "* %?\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("ok" "Concept" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":CONCEPT:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("ot" "Deadline" entry (file+headline "office/gtd.org" "Calendar")
+           "* TODO %? %^T %(org-set-tags-to \":DEADLINE_:\")\n")
+          ("od" "Development" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":DEV:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("ol" "Implementation" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":IMPLEMENTATION:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("oi" "Internal" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":INTERNAL:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("om" "Meeting" entry (file+headline "office/gtd.org" "Calendar")
+           "* TODO %? %^T %(org-set-tags-to \":MEETING:\")\n")
+          ("op" "Pull request" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":PULLREQUEST:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")
+          ("os" "Support" entry (file+headline "office/gtd.org" "Tasks")
+           "* TODO %? %(org-set-tags-to \":SUPPORT:\")\n:PROPERTIES:\n:CREATED: %U\n:END:\n")))
+
+  ;; Allow code blocks in these languages to be executed within org files
+  (require 'ob-emacs-lisp)
+  (require 'ob-shell)
+  (require 'ob-python)
+
+  (defun fbn/org-remove-inherited-tags ()
+    "Remove inherited tags from the headline at point."
+    (interactive)
+    (let ((current-tags (org-get-tags))
+          inherited-tags)
+      ;; Get inherited tags.
+      (org-set-tags-to nil)
+      (setq inherited-tags
+            (mapcar
+             #'(lambda (x)
+                 (if (text-properties-at 0 x)
+                     (substring-no-properties x)
+                   nil))
+             (org-get-tags-at)))
+      (org-set-tags-to current-tags)
+      ;; Remove tags already inherited.
+      (dolist (tag (org-get-tags))
+        (when (member tag inherited-tags)
+          (org-toggle-tag tag 'off)))))
+
+  (defun fbn/org-remove-all-inherited-tags ()
+    "Remove inherited tags from all the headlines."
+    (interactive)
+    (save-excursion
+      (goto-char (point-min))
+      (let ((start-pos (or (and (org-at-heading-p)
+                                (point))
+                           (outline-next-heading))))
+        (while start-pos
+          (fbn/org-remove-inherited-tags)
+          (setq start-pos (outline-next-heading))))))
+
+  ;; Punch-in/-out functionality
+  (setq bh/keep-clock-running nil)
+
+  (defun bh/punch-in (arg)
+    "Start continuous clocking and set the default task to the
+  selected task.  If no task is selected set the Organization task
+  as the default task."
+    (interactive "p")
+    (setq bh/keep-clock-running t)
+    (if (equal major-mode 'org-agenda-mode)
+        ;; We're in the agenda
+        (let* ((marker (org-get-at-bol 'org-hd-marker))
+               (tags (org-with-point-at marker (org-get-tags-at))))
+          (if (and (eq arg 4) tags)
+              (org-agenda-clock-in '(16))
+            (bh/clock-in-organization-task-as-default)))
+      ;; We are not in the agenda
+      (save-restriction
+        (widen)
+        ; Find the tags on the current task
+        (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
+            (org-clock-in '(16))
+          (bh/clock-in-organization-task-as-default)))))
+
+  (defun bh/punch-out ()
+    (interactive)
+    (setq bh/keep-clock-running nil)
+    (when (org-clock-is-active)
+      (org-clock-out))
+    (org-agenda-remove-restriction-lock))
+
+  (defun bh/clock-in-default-task ()
+    (save-excursion
+      (org-with-point-at org-clock-default-task
+        (org-clock-in))))
+
+  (defvar bh/organization-task-id "9e54cd1c-8098-4b5f-aed4-92360869c8ed")
+
+  (defun bh/clock-in-organization-task-as-default ()
+    (interactive)
+    (org-with-point-at (org-id-find bh/organization-task-id 'marker)
+      (org-clock-in '(16))))
+
+  (defun bh/clock-out-maybe ()
+    (when (and bh/keep-clock-running
+               (not org-clock-clocking-in)
+               (marker-buffer org-clock-default-task)
+               (not org-clock-resolving-clocks-due-to-idleness))
+      (bh/clock-in-default-task)))
+
+  (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
+
+  (define-key org-mode-map (kbd "C-c i") 'bh/punch-in)
+  (define-key org-mode-map (kbd "C-c o") 'bh/punch-out)
+#+END_SRC
+*** projectile
+#+BEGIN_SRC emacs-lisp
+  (require 'projectile)
+  (require 'counsel-projectile)
+  (projectile-global-mode)
+
+  ;; Workaround, see https://github.com/bbatsov/projectile/issues/1183
+  (setq projectile-mode-line
+        '(:eval (format " Projectile[%s]"
+                        (projectile-project-name))))
+#+END_SRC
+*** undo-tree
+#+BEGIN_SRC emacs-lisp
+  ;; Undo: C-_  C-/
+  ;; Redo: M-_  C-?
+  ;; Visualize undo-tree: C-x u
+  (require 'undo-tree)
+  (global-undo-tree-mode)
+#+END_SRC
+*** w3m
+#+BEGIN_SRC emacs-lisp
+  (require 'w3m)
+  (require 'w3m-search)
+
+  (global-set-key (kbd "<f8>") 'w3m-goto-url-new-session)
+  (setq browse-url-browser-function 'w3m-goto-url-new-session)
+
+  ;; Use startpage to search things.
+  (add-to-list 'w3m-search-engine-alist
+               '("startpage" "https://www.startpage.com/do/search?query=%s" utf-8))
+  (setq w3m-search-default-engine "startpage")
+
+  (defun fbn/w3m-hook ()
+    (local-set-key (kbd "M") 'w3m-view-url-with-browse-url))
+  (add-hook 'w3m-mode-hook 'fbn/w3m-hook)
+
+  (defun fbn/w3m-rename-buffer (url)
+    "Put url and title into the buffer name."
+    (let ((name (concat "w3m - " w3m-current-title " [" w3m-current-url "]")))
+      (rename-buffer name t)))
+  (add-hook 'w3m-display-hook 'fbn/w3m-rename-buffer)
+#+END_SRC
+*** yasnippet
+#+BEGIN_SRC emacs-lisp
+  (require 'yasnippet)
+  (yas-global-mode t)
+#+END_SRC
+*** smart-mode-line
+#+BEGIN_SRC emacs-lisp
+  (require 'smart-mode-line)
+  (sml/setup)
+
+  ;; Do not show global modes
+  (add-to-list 'rm-blacklist " Helm")
+  (add-to-list 'rm-blacklist " Undo-Tree")
+  (add-to-list 'rm-blacklist " yas")
+#+END_SRC
+** Programming packages
+*** C
+#+BEGIN_SRC emacs-lisp
+  (defun fbn/c-hook ()
+    (c-set-style "k&r")
+    (counsel-gtags-mode)
+    (flycheck-mode)
+    (local-set-key
+     (kbd "<f6>")
+     (defhydra hydra-c-style ()
+       "style"
+       ("8" (lambda () (interactive)
+              (setq tab-width 8)
+              (setq c-basic-offset 8)) "indent = 8")
+       ("4" (lambda () (interactive)
+              (setq tab-width 4)
+              (setq c-basic-offset 4)) "indent = 4")
+       ("t" (lambda () (interactive)
+              (setq indent-tabs-mode t)) "use tabs")
+       ("s" (lambda () (interactive)
+              (setq indent-tabs-mode nil)) "use spaces")
+       ("q" nil nil))))
+  (add-hook 'c-mode-hook 'fbn/c-hook)
+#+END_SRC
+*** Perl
+#+BEGIN_SRC emacs-lisp
+  (defun fbn/perl-hook ()
+    (cperl-mode)
+    (setq cperl-hairy t)
+    ;(setq cperl-electric-parens t)
+    ;(setq cperl-electric-keywords t)
+    ;(setq cperl-auto-newline t)
+    ;(setq cperl-electric-lbrace-space t)
+    (setq cperl-lazy-help-time 2))
+  (add-hook 'perl-mode-hook 'fbn/perl-hook)
+#+END_SRC
+*** PHP
+#+BEGIN_SRC emacs-lisp
+  (require 'php-eldoc)
+  (require 'php-mode)
+  (require 'geben)
+
+  (defun fbn/php-hook ()
+    (php-enable-psr2-coding-style)
+    (local-unset-key (kbd "C-."))
+    (local-unset-key (kbd "C-c C-r"))
+    (local-set-key (kbd "C-c C-n") 'fbn/php-insert-namespace)
+    (local-set-key (kbd "C-c C-p") 'fbn/php-goto-parent-class)
+    (local-set-key (kbd "C-c C-e") 'php-send-region)
+    (php-eldoc-enable)
+  ;  (ggtags-mode)
+  ;  (helm-gtags-mode)
+    (counsel-gtags-mode)
+    (flycheck-mode)
+    (local-set-key
+     (kbd "<f6>")
+     (defhydra hydra-php-geben (:exit t)
+       "geben debugger"
+       ("y" (lambda () (interactive)
+              (if (not dbgp-listeners)
+                  (call-interactively 'geben))) "start")
+       ("n" (lambda () (interactive)
+              (if dbgp-listeners
+                  (call-interactively 'geben-end))) "stop")
+       ("q" nil nil))))
+  (add-hook 'php-mode-hook 'fbn/php-hook)
+
+  ;; Add function to insert namespace
+  (defun fbn/php-insert-namespace ()
+    "Add namespace to PHP file."
+    (interactive)
+    (let ((parts (butlast (cdr (s-split "/" buffer-file-name)))))
+      (if (projectile-project-p)
+          (setq parts (member (projectile-project-name) parts)))
+      (goto-line 3)
+      (if (s-equals? (word-at-point) "namespace")
+          (kill-line 1)
+        (open-line 1))
+      (insert "namespace " (s-join "\\" parts) ";")
+      (newline)))
+
+  ;; Add function to go to parent class
+  (defun fbn/php-goto-parent-class ()
+    "Go to parent class."
+    (interactive)
+    (goto-line 1)
+    (when (and (search-forward-regexp "^\\(abstract \\)?class" nil t)
+               (search-forward-regexp "extends " nil t))
+      (forward-sexp)
+      (backward-word)
+      (counsel-gtags--select-file 'definition (thing-at-point 'word) nil t)))
+#+END_SRC
+*** Python
+#+BEGIN_SRC emacs-lisp
+  (require 'elpy)
+  (require 'py-autopep8)
+
+  (setq python-indent-offset 4)
+
+  ;; Python modules needed:
+  ;; - flake8
+  ;; - jedi
+  ;; - autopep8
+  (elpy-enable)
+
+  ;; Remove flymake, as we prefer flycheck
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  ;(elpy-use-ipython)
+  ;(setq python-shell-interpreter-args (concat "--simple-prompt " python-shell-interpreter-args))
+
+  (defun fbn/python-hook ()
+    (py-autopep8-enable-on-save)
+    (flycheck-mode))
+  (add-hook 'elpy-mode-hook 'fbn/python-hook)
+#+END_SRC
+** Custom key bindings
+
+#+BEGIN_SRC emacs-lisp
+  ;; Custom key bindings
+  ;  (fbn/global-set-key "a" 'helm-apropos t)
+  (fbn/global-set-key "b" 'helm-resume t)
+  ;  (fbn/global-set-key "f" 'helm-for-files t)
+  (fbn/global-set-key "i" 'counsel-imenu t)
+  ;  (fbn/global-set-key "l" 'helm-locate t)
+  ;  (fbn/global-set-key "o" 'helm-occur t)
+  (fbn/global-set-key "m" 'helm-man-woman t)
+  ;  (fbn/global-set-key "r" 'helm-recentf t)
+  (fbn/global-set-key "x" 'helm-register t)
+  (fbn/global-set-key "SPC" 'helm-all-mark-rings t)
+  (fbn/global-set-key "TAB" 'helm-lisp-completion-at-point t)
+  ;  (fbn/global-set-key "/" 'helm-find t)
+
+  ;; Use C-h as backspace
+  (global-set-key (kbd "C-h") 'backward-delete-char-untabify)
+  (global-set-key (kbd "C-c h") 'help-command)
+  (global-set-key (kbd "C-<f1>") 'help-command)
+
+  ;; Use C-w as backspace kill word
+  (global-set-key (kbd "C-w") 'backward-kill-word)
+  (global-set-key (kbd "C-x C-k") 'kill-region)
+
+  ;;; Hydras
+  (require 'hydra-examples)
+  ;; Find/search stuff
+  (global-set-key
+   (kbd "<f2>")
+   (defhydra hydra-find (:exit t)
+     "
+  ^Find^          ^Search^
+  ^^^^^^^^--------------------------
+  _f_: files         _g_: rgrep     
+  _l_: locate        _d_: lgrep     
+  _p_: projectile    _o_: occur     
+  _r_: recent        ^ ^            
+  _/_: find          ^ ^            
+  "
+     ("f" helm-for-files nil)
+     ("l" counsel-locate nil)
+     ("p" counsel-projectile nil)
+     ("r" helm-recentf nil)
+     ("/" helm-find nil)
+     ("g" (lambda () (interactive)
+            (let ((current-prefix-arg '(4)))
+              (call-interactively 'fbn/helm-do-grep))) nil)
+     ("d" fbn/helm-do-grep nil)
+     ("G" rgrep nil)
+     ("D" lgrep nil)
+     ("o" helm-occur nil)
+     ("O" fbn/helm-multi-occur nil)
+     ("q" nil nil)))
+
+  ;; Help
+  (global-set-key
+   (kbd "<f1>")
+   (defhydra hydra-help (:exit t)
+     "
+  Help
+  ---------------------------------------------------------------------------------------------------------
+  _a_: apropos           _i_: info                     _r_: emacs manual      _C-a_: about emacs           
+  _b_: bindings          _I_: input method             _s_: syntax            _C-c_: copying               
+  _c_: key briefly       _k_: key                      _S_: lookup symbol     _C-d_: emacs debugging       
+  _C_: coding system     _K_: key command node         _t_: tutorial          _C-e_: external packages     
+  _d_: apropos doc       _l_: lossage                  _v_: variable          _C-f_: emacs FAQ             
+  _e_: echo messages     _L_: language environment     _w_: where is          _C-m_: order manuals         
+  _f_: function          _m_: mode                     _._: local help        _C-o_: distribution          
+  _F_: command node      _n_: emacs news               _?_: help              _C-p_: emacs problems        
+  _g_: gnu project       _p_: find package             ^ ^                    _C-t_: emacs todo            
+  _h_: hello file        _P_: package                  ^ ^                    _C-w_: no-warranty           
+  "
+     ("a" helm-apropos nil)
+     ("b" counsel-descbinds nil)
+     ("c" describe-key-briefly nil)
+     ("C" describe-coding-system nil)
+     ("d" apropos-documentation nil)
+     ("e" view-echo-area-messages nil)
+     ("f" counsel-describe-function nil)
+     ("F" Info-goto-emacs-command-node nil)
+     ("g" describe-gnu-project nil)
+     ("h" view-hello-file nil)
+     ("i" info nil)
+     ("I" describe-input-method nil)
+     ("k" describe-key nil)
+     ("K" Info-goto-emacs-key-command-node nil)
+     ("l" view-lossage nil)
+     ("L" describe-language-environment nil)
+     ("m" describe-mode nil)
+     ("n" view-emacs-news nil)
+     ("p" finder-by-keyword nil)
+     ("P" describe-package nil)
+     ("r" info-emacs-manual nil)
+     ("s" describe-syntax nil)
+     ("S" info-lookup-symbol nil)
+     ("t" help-with-tutorial nil)
+     ("v" counsel-describe-variable nil)
+     ("w" where-is nil)
+     ("." display-local-help nil)
+     ("?" help-for-help nil)
+     ("C-a" about-emacs nil)
+     ("C-c" describe-copying nil)
+     ("C-d" view-emacs-debugging nil)
+     ("C-e" view-external-packages nil)
+     ("C-f" view-emacs-FAQ nil)
+     ("C-m" view-order-manuals nil)
+  ;   ("C-n" view-emacs-news nil)
+     ("C-o" describe-distribution nil)
+     ("C-p" view-emacs-problems nil)
+     ("C-t" view-emacs-todo nil)
+     ("C-w" describe-no-warranty nil)
+     ("q" nil nil)))
+
+  ;; Zoom
+  (global-set-key
+   (kbd "<f9>")
+   (defhydra hydra-font ()
+     "font"
+     ("u" (lambda () (interactive)
+            (text-scale-increase 0.5)) "size up")
+     ("d" (lambda () (interactive)
+            (text-scale-decrease 0.5)) "size down")
+     ("t" variable-pitch-mode "toggle width")
+     ("r" (lambda () (interactive)
+            (text-scale-set 0)
+            (if (bound-and-true-p buffer-face-mode)
+                (variable-pitch-mode))) "reset" :exit t)
+     ("j" fbn/set-jp-font "jp font")
+     ("q" nil nil)))
+
+  ;; Window
+  (global-set-key
+   (kbd "C-M-o")
+   (defhydra hydra-window (:color red
+                          :columns nil)
+     "window"
+     ("j" windmove-left)
+     ("k" windmove-down)
+     ("i" windmove-up)
+     ("l" windmove-right)
+     ("J" hydra-move-splitter-left nil)
+     ("K" hydra-move-splitter-down nil)
+     ("I" hydra-move-splitter-up nil)
+     ("L" hydra-move-splitter-right nil)
+     ("v" (lambda () (interactive)
+            (split-window-right)
+            (windmove-right))
+      "vert")
+     ("x" (lambda () (interactive)
+            (split-window-below)
+            (windmove-down))
+      "horz")
+     ("t" transpose-frame "'")
+     ("o" delete-other-windows "one" :exit t)
+     ("a" ace-window "ace")
+     ("s" ace-swap-window "swap")
+     ("d" ace-delete-window "del")
+     ("f" ace-maximize-window "ace-one" :exit t)
+     ("b" ido-switch-buffer "buf")
+     ("m" bookmark-jump "bmk")
+     ("u" winner-undo "undo")
+     ("r" winner-redo "redo")
+     ("q" nil nil)))
+#+END_SRC
+** Themes
+   Solarized theme
+#+BEGIN_SRC emacs-lisp
+  (when (equal custom-enabled-themes '(solarized-dark))
+    ;; Solarized dark
+    (require 'dired+)
+    ;; Solarized palette
+    (let* ((s-base03    "#002b36")
+           (s-base02    "#073642")
+           (s-base01    "#586e75")
+           (s-base00    "#657b83")
+           (s-base0     "#839496")
+           (s-base1     "#93a1a1")
+           (s-base2     "#eee8d5")
+           (s-base3     "#fdf6e3")
+
+           ;; Aliases
+           (primary-content s-base0)
+           (secondary-content s-base01)
+           (emphasized-content s-base1)
+           (background s-base03)
+           (background-highlights s-base02)
+
+           ;; Solarized accented colors
+           (yellow    "#b58900")
+           (orange    "#cb4b16")
+           (red       "#dc322f")
+           (magenta   "#d33682")
+           (violet    "#6c71c4")
+           (blue      "#268bd2")
+           (cyan      "#2aa198")
+           (green     "#859900")
+
+           ;; Darker and lighter accented colors
+           ;; Only use these in exceptional circumstances!
+           (yellow-d  "#7B6000")
+           (yellow-l  "#DEB542")
+           (orange-d  "#8B2C02")
+           (orange-l  "#F2804F")
+           (red-d     "#990A1B")
+           (red-l     "#FF6E64")
+           (magenta-d "#93115C")
+           (magenta-l "#F771AC")
+           (violet-d  "#3F4D91")
+           (violet-l  "#9EA0E5")
+           (blue-d    "#00629D")
+           (blue-l    "#69B7F0")
+           (cyan-d    "#00736F")
+           (cyan-l    "#69CABF")
+           (green-d   "#546E00")
+           (green-l   "#B4C342"))
+
+      ;; dired+
+      ;; General
+      (set-face-attribute 'diredp-dir-heading nil :background nil :foreground yellow)
+      (set-face-attribute 'diredp-dir-priv nil :background nil :foreground yellow)
+      (set-face-foreground 'diredp-file-name green-l)
+      (set-face-foreground 'diredp-file-suffix cyan)
+      (set-face-foreground 'diredp-date-time blue)
+      (set-face-foreground 'diredp-number blue)
+      ;; Privileges
+      (set-face-background 'diredp-read-priv nil)
+      (set-face-background 'diredp-write-priv nil)
+      (set-face-background 'diredp-exec-priv nil)
+      (set-face-background 'diredp-other-priv nil)
+      (set-face-background 'diredp-no-priv nil)
+      (set-face-background 'diredp-rare-priv nil)
+      (set-face-background 'diredp-link-priv nil)
+      ;; Marks
+      (set-face-attribute 'diredp-deletion nil :background red :foreground green-l)
+      (set-face-foreground 'diredp-deletion-file-name red)
+      (set-face-foreground 'diredp-mode-line-flagged red)
+      (set-face-attribute 'diredp-flag-mark nil :background green-l :foreground background)
+      (set-face-attribute 'diredp-flag-mark-line nil :background s-base01 :foreground background)
+      (set-face-foreground 'diredp-mode-line-marked green-l)
+    
+      ;;   `diredp-compressed-file-suffix'
+      ;;   `diredp-display-msg',
+      ;;   `diredp-executable-tag'
+      ;;   `diredp-get-file-or-dir-name',
+      ;;   `diredp-ignored-file-name'
+      ;;   `diredp-symlink',
+    
+      ;; ace-window
+      (set-face-foreground 'aw-leading-char-face red)
+      (set-face-foreground 'aw-background-face secondary-content)
+
+      ;; hackernews
+      (set-face-foreground 'hackernews-link emphasized-content)
+      (set-face-attribute 'hackernews-link nil :weight 'normal)
+      (set-face-foreground 'hackernews-comment-count secondary-content)
+      (set-face-foreground 'hackernews-score primary-content)
+
+      ;; ivy
+      (set-face-foreground 'ivy-modified-buffer cyan)
+      (set-face-attribute 'ivy-virtual nil :slant 'italic :weight 'normal)
+
+      ))
+
+  ;(setq solarized-distinct-fringe-background t)
+  ;(setq solarized-high-contrast-mode-line t)
+  ;(setq x-underline-at-descent-line t)
+#+END_SRC
+** Custom settings
+
+   Settings stored in this custom file are geared towards a specific environment and
+   thus not generally useful. Therefore, the file is not part of the master branch.
+   
+#+BEGIN_SRC emacs-lisp
+#+END_SRC
