@@ -1,4 +1,4 @@
-#+TITLE: CONFIG
+#+TITLE: SETTINGS
 #+DATE: <2017-12-04 Mon>
 #+AUTHOR: Fabian Wiget
 

@@ -4,9 +4,9 @@
 
 ;; Load init file in org format.
 (require 'org)
-(org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
+(org-babel-load-file (expand-file-name "settings.org" user-emacs-directory))
 
 ;; Load custom settings.
-(let ((custom-file (expand-file-name "custom.org" user-emacs-directory)))
+(let ((custom-file (expand-file-name "custom-settings.org" user-emacs-directory)))
   (when (file-exists-p custom-file)
     (org-babel-load-file custom-file)))

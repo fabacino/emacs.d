@@ -4,8 +4,8 @@ abbrev_defs
 ac-comphist.dat
 auto-save-list/
 bookmarks
-config.el
-custom.el
+settings.el
+custom-settings.el
 emms/
 geben/
 projectile-bookmarks.eld
