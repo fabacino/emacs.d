@@ -1,0 +1,29 @@
+#+TITLE: CUSTOM SETTINGS
+#+DATE: <2017-12-05 Tue>
+#+AUTHOR: Fabian Wiget
+
+* General
+
+Save backup files in a single folder, not all over the place.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist '(("." . "~/.bkup")))
+#+END_SRC
+
+
+Exclude unnecessary stuff from grep.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'grep-find-ignored-files "GTAGS")
+  (add-to-list 'grep-find-ignored-files "GRTAGS")
+  (add-to-list 'grep-find-ignored-files "GPATH")
+#+END_SRC
+
+
+Shorten path to home directory.
+  
+#+BEGIN_SRC emacs-lisp
+  (defun fbn/frame-title-buffer-name (name)
+    "Modify buffer name for main frame title."
+    (replace-regexp-in-string (concat "/home/" (getenv "USER") "/") "~/" name))
+#+END_SRC
