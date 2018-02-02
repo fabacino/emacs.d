@@ -560,6 +560,7 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-count-format "(%d/%d) ")
   (setq ivy-height 11)
+  (setq ivy-format-function 'ivy-format-function-arrow)
   (setq ivy-use-selectable-prompt t)
 
   (global-set-key (kbd "C-M-s") 'swiper)
