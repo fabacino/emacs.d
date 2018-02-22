@@ -740,7 +740,8 @@
                      (substring-no-properties x)
                    nil))
              (org-get-tags-at)))
-      (org-set-tags-to current-tags)
+      (when (not (equal current-tags '("")))
+        (org-set-tags-to current-tags))
       ;; Remove tags already inherited.
       (dolist (tag (org-get-tags))
         (when (member tag inherited-tags)
