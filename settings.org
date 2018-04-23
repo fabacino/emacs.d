@@ -551,7 +551,7 @@
     (let ((helm-execute-action-at-once-if-one nil))
       (apply orig-fun plist)))
 #+END_SRC
-*** ivy
+*** ivy / counsel
 #+BEGIN_SRC emacs-lisp
   (require 'swiper)
 
@@ -570,6 +570,8 @@
   ;(global-set-key (kbd "<f6>") 'ivy-resume)
   (global-set-key (kbd "M-x") 'counsel-M-x)
   (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+  (global-set-key (kbd "C-x C-b") 'counsel-ibuffer)
+  (global-set-key (kbd "C-c C-x C-b") 'ibuffer)
   ;(global-set-key (kbd "<f1> l") 'counsel-load-library)
   ;(global-set-key (kbd "<f2> i") 'counsel-info-lookup-symbol)
   ;(global-set-key (kbd "<f2> u") 'counsel-unicode-char)
