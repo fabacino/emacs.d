@@ -2,6 +2,7 @@
 .org-id-locations
 abbrev_defs
 ac-comphist.dat
+amx-items
 auto-save-list/
 bookmarks
 settings.el
