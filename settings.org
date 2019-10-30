@@ -301,6 +301,29 @@
 #+BEGIN_SRC emacs-lisp
   (require 'dired+)
 
+  (setq dired-dwim-target t)
+
+  (defvar fbn/dired-default-listing-switches dired-listing-switches)
+  (defun fbn/dired-hook ()
+    (local-set-key
+     (kbd "<f6>")
+     (defhydra hydra-dired (:exit t)
+       "
+  listing: [_d_] default  [_f_] directories first
+  "
+       ("d"
+        (lambda () (interactive)
+          (dired-sort-other fbn/dired-default-listing-switches))
+        nil)
+       ("f"
+        (lambda () (interactive)
+          (dired-sort-other
+           (concat fbn/dired-default-listing-switches " --group-directories-first")))
+        nil)
+       ("q" nil nil))))
+  (add-hook 'dired-mode-hook 'fbn/dired-hook)
+
+
   ;; Adjust dired functions for locate-mode
   ;; This does not work out of the box for windows
   (when (string-equal system-type "windows-nt")
