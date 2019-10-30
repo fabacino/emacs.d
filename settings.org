@@ -949,6 +949,7 @@
 
   (defun fbn/php-hook ()
     (php-enable-psr2-coding-style)
+    (setq c-basic-offset 4)
     (local-unset-key (kbd "C-."))
     (local-unset-key (kbd "C-c C-r"))
     (local-set-key (kbd "C-c C-n") 'fbn/php-insert-namespace)
@@ -961,14 +962,16 @@
     (flycheck-mode)
     (local-set-key
      (kbd "<f6>")
-     (defhydra hydra-php-geben (:exit t)
-       "geben debugger"
+     (defhydra hydra-php (:exit t)
+       "
+  geben debugger: [_y_] start     [_n_] stop
+    "
        ("y" (lambda () (interactive)
               (if (not dbgp-listeners)
-                  (call-interactively 'geben))) "start")
+                  (call-interactively 'geben))) nil)
        ("n" (lambda () (interactive)
               (if dbgp-listeners
-                  (call-interactively 'geben-end))) "stop")
+                  (call-interactively 'geben-end))) nil)
        ("q" nil nil))))
   (add-hook 'php-mode-hook 'fbn/php-hook)
 
