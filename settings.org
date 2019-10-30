@@ -615,7 +615,9 @@
   (setq counsel-org-goto-display-todo t)
   (define-key org-mode-map (kbd "C-c C-j") 'counsel-org-goto)
   (define-key org-mode-map (kbd "C-u C-c C-j") 'counsel-org-goto-all)
-
+#+END_SRC
+*** counsel-gtags
+#+BEGIN_SRC emacs-lisp
   (require 'counsel-gtags)
   (setq counsel-gtags-ignore-case t)
   (setq counsel-gtags-auto-update t)
@@ -630,8 +632,15 @@
     (define-key counsel-gtags-mode-map (kbd "C-c M-f") 'counsel-gtags-find-file)
     (define-key counsel-gtags-mode-map (kbd "C-c M-p") 'counsel-gtags-go-backward)
     (define-key counsel-gtags-mode-map (kbd "C-c M-n") 'counsel-gtags-go-forward)
-  ;  (define-key counsel-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)
+    ;(define-key counsel-gtags-mode-map (kbd "C-c M-?") 'fbn/helm-gtags-show-definition)
   )
+
+  ;; Add function to change tag files.
+  (defun fbn/gtags-change-tag-files (source-dir target-dir)
+    "Change tag files for global/gtags."
+    (dolist (filename '("GPATH" "GRTAGS" "GTAGS"))
+      (delete-file (concat target-dir filename))
+      (copy-file (concat source-dir filename) (concat target-dir filename))))
 #+END_SRC
 *** locate
 #+BEGIN_SRC emacs-lisp
