@@ -979,15 +979,24 @@
   (defun fbn/php-insert-namespace ()
     "Add namespace to PHP file."
     (interactive)
-    (let ((parts (butlast (cdr (s-split "/" buffer-file-name)))))
-      (if (projectile-project-p)
-          (setq parts (member (projectile-project-name) parts)))
-      (goto-line 3)
-      (if (s-equals? (word-at-point) "namespace")
-          (kill-line 1)
-        (open-line 1))
-      (insert "namespace " (s-join "\\" parts) ";")
-      (newline)))
+    (let ((class-name (s-chop-prefix "/" buffer-file-name)))
+      (when (projectile-project-p)
+        (let ((project-name (car (last (butlast (s-split "/" (projectile-project-root)))))))
+          (setq class-name
+                (concat
+                 (s-capitalize project-name) "/"
+                 (replace-regexp-in-string
+                  "^tests/" "Tests/"
+                  (replace-regexp-in-string
+                   "^src/" ""
+                   (car (projectile-make-relative-to-root (list (buffer-file-name))))))))))
+      (goto-char (point-min))
+      (if (search-forward "namespace" nil t)
+          (kill-line)
+        (forward-line 2)
+        (insert "namespace")
+        (open-line 2))
+      (insert " " (s-join "\\" (butlast (s-split "/" class-name))) ";")))
 
   ;; Add function to go to parent class
   (defun fbn/php-goto-parent-class ()
