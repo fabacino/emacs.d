@@ -8,7 +8,7 @@
   :END:
 
   `init.el` contains only the code below.
-  
+
 #+BEGIN_SRC emacs-lisp :tangle no
   ;; Initialize Emacs packages.
   (package-initialize)
@@ -190,7 +190,7 @@
 
   (defun kill-this-buffer ()
     "Kill current buffer."
-    (interactive) 
+    (interactive)
     (kill-buffer (current-buffer)))
   (global-set-key (kbd "C-x k") 'kill-this-buffer)
 
@@ -341,7 +341,7 @@
   (defun fbn/emms-playlist-info-reload ()
     (interactive)
     (fbn/emms-info-reload (list (emms-playlist-track-at))))
-  
+
   (defun fbn/emms-info-reload (tracks)
     (mapc (lambda (track)
             (let ((filename (emms-track-name track)))
@@ -1023,11 +1023,11 @@
      "
   ^Find^          ^Search^
   ^^^^^^^^--------------------------
-  _f_: files         _g_: rgrep     
-  _l_: locate        _d_: lgrep     
-  _p_: projectile    _o_: occur     
-  _r_: recent        ^ ^            
-  _/_: find          ^ ^            
+  _f_: files         _g_: rgrep
+  _l_: locate        _d_: lgrep
+  _p_: projectile    _o_: occur
+  _r_: recent        ^ ^
+  _/_: find          ^ ^
   "
      ("f" helm-for-files nil)
      ("l" counsel-locate nil)
@@ -1051,16 +1051,16 @@
      "
   Help
   ---------------------------------------------------------------------------------------------------------
-  _a_: apropos           _i_: info                     _r_: emacs manual      _C-a_: about emacs           
-  _b_: bindings          _I_: input method             _s_: syntax            _C-c_: copying               
-  _c_: key briefly       _k_: key                      _S_: lookup symbol     _C-d_: emacs debugging       
-  _C_: coding system     _K_: key command node         _t_: tutorial          _C-e_: external packages     
-  _d_: apropos doc       _l_: lossage                  _v_: variable          _C-f_: emacs FAQ             
-  _e_: echo messages     _L_: language environment     _w_: where is          _C-m_: order manuals         
-  _f_: function          _m_: mode                     _._: local help        _C-o_: distribution          
-  _F_: command node      _n_: emacs news               _?_: help              _C-p_: emacs problems        
-  _g_: gnu project       _p_: find package             ^ ^                    _C-t_: emacs todo            
-  _h_: hello file        _P_: package                  ^ ^                    _C-w_: no-warranty           
+  _a_: apropos           _i_: info                     _r_: emacs manual      _C-a_: about emacs
+  _b_: bindings          _I_: input method             _s_: syntax            _C-c_: copying
+  _c_: key briefly       _k_: key                      _S_: lookup symbol     _C-d_: emacs debugging
+  _C_: coding system     _K_: key command node         _t_: tutorial          _C-e_: external packages
+  _d_: apropos doc       _l_: lossage                  _v_: variable          _C-f_: emacs FAQ
+  _e_: echo messages     _L_: language environment     _w_: where is          _C-m_: order manuals
+  _f_: function          _m_: mode                     _._: local help        _C-o_: distribution
+  _F_: command node      _n_: emacs news               _?_: help              _C-p_: emacs problems
+  _g_: gnu project       _p_: find package             ^ ^                    _C-t_: emacs todo
+  _h_: hello file        _P_: package                  ^ ^                    _C-w_: no-warranty
   "
      ("a" helm-apropos nil)
      ("b" counsel-descbinds nil)
@@ -1229,14 +1229,14 @@
       (set-face-attribute 'diredp-flag-mark nil :background green-l :foreground background)
       (set-face-attribute 'diredp-flag-mark-line nil :background s-base01 :foreground background)
       (set-face-foreground 'diredp-mode-line-marked green-l)
-    
+
       ;;   `diredp-compressed-file-suffix'
       ;;   `diredp-display-msg',
       ;;   `diredp-executable-tag'
       ;;   `diredp-get-file-or-dir-name',
       ;;   `diredp-ignored-file-name'
       ;;   `diredp-symlink',
-    
+
       ;; ace-window
       (set-face-foreground 'aw-leading-char-face red)
       (set-face-foreground 'aw-background-face secondary-content)
@@ -1261,6 +1261,6 @@
 
    Settings stored in this custom file are geared towards a specific environment and
    thus not generally useful. Therefore, the file is not part of the master branch.
-   
+
 #+BEGIN_SRC emacs-lisp
 #+END_SRC

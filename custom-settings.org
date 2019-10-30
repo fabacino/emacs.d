@@ -21,7 +21,7 @@ Exclude unnecessary stuff from grep.
 
 
 Shorten path to home directory.
-  
+
 #+BEGIN_SRC emacs-lisp
   (defun fbn/frame-title-buffer-name (name)
     "Modify buffer name for main frame title."
