@@ -1035,6 +1035,12 @@
     (flycheck-mode))
   (add-hook 'elpy-mode-hook 'fbn/python-hook)
 #+END_SRC
+*** Lisp
+#+BEGIN_SRC emacs-lisp
+  (defun fbn/emacs-lisp-mode-hook ()
+    (flycheck-mode))
+  (add-hook 'emacs-lisp-mode-hook 'fbn/emacs-lisp-mode-hook)
+#+END_SRC
 ** Custom key bindings
 
 #+BEGIN_SRC emacs-lisp
