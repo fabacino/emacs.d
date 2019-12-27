@@ -947,6 +947,9 @@
   (require 'php-mode)
   (require 'geben)
 
+  (setq flycheck-phpcs-standard "PSR2")
+  (setq php-template-compatibility nil)
+
   (defun fbn/php-hook ()
     (php-enable-psr2-coding-style)
     (setq c-basic-offset 4)
