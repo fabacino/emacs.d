@@ -17,6 +17,7 @@ Exclude unnecessary stuff from grep.
   (add-to-list 'grep-find-ignored-files "GTAGS")
   (add-to-list 'grep-find-ignored-files "GRTAGS")
   (add-to-list 'grep-find-ignored-files "GPATH")
+  (add-to-list 'grep-find-ignored-files "*.log")
 #+END_SRC
 
 
