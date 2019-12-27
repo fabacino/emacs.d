@@ -42,7 +42,7 @@
       ("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" default)))
    '(package-selected-packages
      (quote
-      (pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm))))
+      (flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm))))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -946,9 +946,11 @@
   (require 'php-eldoc)
   (require 'php-mode)
   (require 'geben)
+  (require 'flycheck-phpstan)
 
   (setq flycheck-phpcs-standard "PSR2")
   (setq php-template-compatibility nil)
+  (setq-default phpstan-level 'max)
 
   (defun fbn/php-hook ()
     (php-enable-psr2-coding-style)
