@@ -40,7 +40,7 @@
    '(custom-safe-themes
      '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" default))
    '(package-selected-packages
-     '(php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
+     '(magit counsel-gtags php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -67,10 +67,11 @@
 
 #+BEGIN_SRC emacs-lisp
   (let ((repos '("hackernews"
-                 "magit/lisp"
-                 "php-mode"
-                 "swiper"
-                 "counsel-gtags")))
+                 ;"magit/lisp"
+                 ;"php-mode"
+                 ;"swiper"
+                 ;"counsel-gtags"
+                 )))
     (dolist (repo repos)
       (add-to-list
        'load-path
