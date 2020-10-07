@@ -36,13 +36,11 @@
    ;; If you edit it by hand, you could mess it up, so be careful.
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
-   '(custom-enabled-themes (quote (solarized-dark)))
+   '(custom-enabled-themes '(solarized-dark))
    '(custom-safe-themes
-     (quote
-      ("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" default)))
+     '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" default))
    '(package-selected-packages
-     (quote
-      (flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-mode php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm))))
+     '(php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
@@ -68,8 +66,7 @@
 ** Git sources
 
 #+BEGIN_SRC emacs-lisp
-  (let ((repos '("comics"
-                 "hackernews"
+  (let ((repos '("hackernews"
                  "magit/lisp"
                  "php-mode"
                  "swiper"
@@ -292,10 +289,6 @@
   (global-set-key (kbd "M-g M-g") 'avy-goto-line)
 
   (define-key isearch-mode-map (kbd "M-g") 'avy-isearch)
-#+END_SRC
-*** comics
-#+BEGIN_SRC emacs-lisp
-  (require 'comics)
 #+END_SRC
 *** dired
 #+BEGIN_SRC emacs-lisp
