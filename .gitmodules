@@ -1,9 +1,6 @@
 [submodule "git/hackernews"]
 	path = git/hackernews
 	url = https://github.com/fabacino/hackernews.el.git
-[submodule "git/comics"]
-	path = git/comics
-	url = https://github.com/fabacino/comics-el.git
 [submodule "git/swiper"]
 	path = git/swiper
 	url = https://github.com/fabacino/swiper.git
