@@ -60,7 +60,7 @@
    The directory should probably be renamed to `site-lisp`.
 
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path (expand-file-name "elisp" user-emacs-directory))
+  (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 #+END_SRC
 
 ** Git sources
