@@ -38,7 +38,7 @@
    ;; If there is more than one, they won't work right.
    '(custom-enabled-themes '(solarized-dark))
    '(custom-safe-themes
-     '("aff12479ae941ea8e790abb1359c9bb21ab10acd15486e07e64e0e10d7fdab38" default))
+     '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" default))
    '(package-selected-packages
      '(twig-mode magit counsel-gtags php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
   (custom-set-faces

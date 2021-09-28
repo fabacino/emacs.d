@@ -563,7 +563,7 @@ Return t on success, nil otherwise."
        (if (zerop (process-exit-status process))
 	   (progn
              (message "Success: %s TAGS" ,action)
-	     (setq counsel-gtags--last-update-time (current-time)))
+	     (setq counsel-gtags--last-update-time (float-time (current-time))))
          (message "Failed: %s TAGS(%d)" ,action (process-exit-status process))))))
 
 
