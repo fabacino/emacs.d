@@ -945,6 +945,8 @@
   (setq flycheck-phpcs-standard "PSR2")
   (setq php-template-compatibility nil)
   (setq-default phpstan-level 'max)
+  ;; Workaround for a bug which currently prevents phpcs from running after phpstan.
+  (flycheck-add-next-checker 'phpstan 'php-phpcs)
 
   (defun fbn/php-hook ()
     (php-enable-psr2-coding-style)
