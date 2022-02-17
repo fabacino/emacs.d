@@ -385,7 +385,7 @@ Extra command line parameters to global are forwarded through EXTRA-OPTIONS."
      ((null collection) ;; No candidates in collection.
       (message "No candidate available for %s" tagname)
       nil)
-     ((and auto-select-only-candidate (= (length collection) 1))
+     ((and auto-select-only-candidate (= (length collection) 1) (car first))
       (counsel-gtags--find-file (car first)))
      (t
       (ivy-read "Pattern: "
