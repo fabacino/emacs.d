@@ -3,7 +3,6 @@
 (setq package-enable-at-startup nil)
 
 ;; Load init file in org format.
-(require 'org)
 (org-babel-load-file (expand-file-name "settings.org" user-emacs-directory))
 
 ;; Load custom settings.
