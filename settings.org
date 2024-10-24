@@ -40,7 +40,7 @@
    '(custom-safe-themes
      '("fee7287586b17efbfda432f05539b58e86e059e78006ce9237b8732fde991b4c" default))
    '(package-selected-packages
-     '(yaml-mode twig-mode magit counsel-gtags php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
+     '(amx yaml-mode twig-mode magit counsel-gtags php-mode flycheck-phpstan pocket-mode markdown-mode py-autopep8 elpy less-css-mode w32-browser undo-tree transpose-frame sqlplus solarized-theme smart-mode-line php-eldoc packed helm-w3m helm-gtags grep-a-lot ggtags geben flycheck fill-column-indicator f epc emms dired+ counsel-projectile ace-window ac-helm)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.
