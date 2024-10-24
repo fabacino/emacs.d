@@ -411,7 +411,7 @@
 #+END_SRC
 *** helm
 #+BEGIN_SRC emacs-lisp
-  (require 'helm-config)
+  ;(require 'helm-config)
   ;(helm-mode t)
   (setq helm-buffers-fuzzy-matching t)
   ;(setq helm-buffer-max-length 36)
