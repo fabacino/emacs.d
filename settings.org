@@ -10,6 +10,7 @@
   `init.el` contains only the code below.
 
 #+BEGIN_SRC emacs-lisp :tangle no
+  ;; -*- lexical-binding: nil; -*-
   ;; Initialize Emacs packages.
   (package-initialize)
   (setq package-enable-at-startup nil)
@@ -24,7 +25,13 @@
       (org-babel-load-file custom-file)))
 #+END_SRC
 
-* Package initialization
+* Common initialization
+
+Specify lexical binding.
+
+#+BEGIN_SRC emacs-lisp
+  ;; -*- lexical-binding: nil; -*-
+#+END_SRC
 
 * Custom variables
 

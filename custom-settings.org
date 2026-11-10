@@ -4,6 +4,13 @@
 
 * General
 
+Specify lexical binding.
+
+#+BEGIN_SRC emacs-lisp
+  ;; -*- lexical-binding: nil; -*-
+#+END_SRC
+
+
 Save backup files in a single folder, not all over the place.
 
 #+BEGIN_SRC emacs-lisp
